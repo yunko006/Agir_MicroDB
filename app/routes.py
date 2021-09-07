@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, BenevoleForm
+from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm
 from app.models import Benevole
 
+from app.utils import appartenance
 
-@app.route('/')
+
 @app.route('/index')
 def index():
     user = {'username': 'Thomas'}
@@ -31,6 +32,7 @@ def login():
     return render_template('login.html', title="Sign In", form=form)
 
 
+@app.route('/')
 @app.route('/benevoles')
 def get_benevoles():
     benevoles = Benevole.objects()
@@ -53,7 +55,9 @@ def register_benevole():
     benevole = BenevoleForm()
     if benevole.validate_on_submit():
         new_benevole = Benevole()
+        new_benevole.id = int(request.form['id'])
         new_benevole.nom = request.form['nom']
+        # print(type(request.form['nom']))
         new_benevole.prenom = request.form['prenom']
         new_benevole.email = request.form['email']
         new_benevole.save()
@@ -61,3 +65,23 @@ def register_benevole():
         return redirect(url_for('get_benevoles'))
 
     return render_template('register_benevole.html', title='register_benevole', benevole=benevole)
+
+
+@app.route('/update_benevole', methods=['GET', 'POST'])
+def update_benevole():
+    update = UpdateBenevoleForm()
+    if update.validate_on_submit():
+        field = request.form['field']
+        value = request.form['value']
+        benevole_id = int(request.form['id'])
+        # field_appartenance = appartenance(field)
+        update_dict = {
+            f'set__{field}': f'{value}'
+        }
+        Benevole.objects(id=benevole_id).update_one(
+            **update_dict)
+        flash(
+            f"{Benevole.objects(id=benevole_id)} a bien été mise à jour!")
+        return redirect(url_for('get_benevoles'))
+
+    return render_template('update_benevole.html', title='Update_bénévole', update=update)

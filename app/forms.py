@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 
 
@@ -11,7 +11,15 @@ class LoginForm(FlaskForm):
 
 
 class BenevoleForm(FlaskForm):
+    id = StringField('ID', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     submit = SubmitField('Enregistrer')
+
+
+class UpdateBenevoleForm(FlaskForm):
+    id = StringField('ID', validators=[DataRequired()])
+    field = StringField('Champs', validators=[DataRequired()])
+    value = StringField('Valeur', validators=[DataRequired()])
+    submit = SubmitField('Mettre à jour')

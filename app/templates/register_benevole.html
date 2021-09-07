@@ -5,6 +5,13 @@
     <form action="" method="post" novalidate>
         {{ benevole.hidden_tag() }}
         <p>
+            {{ benevole.id.label}}<br>
+            {{ benevole.id(size=32)}}<br>
+            {% for error in benevole.id.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
             {{ benevole.nom.label}}<br>
             {{ benevole.nom(size=32)}}<br>
             {% for error in benevole.nom.errors %}

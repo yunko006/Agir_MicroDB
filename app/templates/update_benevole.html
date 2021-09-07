@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Update un bénévole: </h1>
+    <form action="" method="post" novalidate>
+        {{ update.hidden_tag() }}
+        <p>
+            {{ update.id.label}}<br>
+            {{ update.id(size=32)}}<br>
+            {% for error in update.id.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ update.field.label }}<br>
+            {{ update.field(size=32) }}<br>
+            {% for error in update.field.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ update.value.label }}<br>
+            {{ update.value(size=32) }}<br>
+            {% for error in update.value.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ update.submit() }}</p>
+    </form>
+{% endblock %}
