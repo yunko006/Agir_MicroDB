@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Enregistrer un bénévole: </h1>
+    <form action="" method="post" novalidate>
+        {{ benevole.hidden_tag() }}
+        <p>
+            {{ benevole.nom.label}}<br>
+            {{ benevole.nom(size=32)}}<br>
+            {% for error in benevole.nom.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.prenom.label }}<br>
+            {{ benevole.prenom(size=32) }}<br>
+            {% for error in benevole.prenom.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.email.label }}<br>
+            {{ benevole.email(size=32) }}<br>
+            {% for error in benevole.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>{{ benevole.submit() }}</p>
+    </form>
+{% endblock %}
