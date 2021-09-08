@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm
-from app.models import Benevole, Langues
+from app.models import *
 
 from app.utils import *
 
@@ -56,6 +56,9 @@ def register_benevole():
     if benevole.validate_on_submit():
         new_benevole = Benevole()
         langues = Langues()
+        contact = Contact()
+        contact.numéro_téléphone = request.form['numero']
+        contact.adresse_mail = request.form['email']
         langues.francais = request.form['francais']
         langues.anglais = request.form['anglais']
         langues.espagnol = request.form['espagnol']
@@ -70,8 +73,9 @@ def register_benevole():
         new_benevole.nom = request.form['nom']
         # print(type(request.form['nom']))
         new_benevole.prenom = request.form['prenom']
-        new_benevole.email = request.form['email']
+
         new_benevole.langues = langues
+        new_benevole.contact = contact
 
         new_benevole.save()
         flash('Succès ! Nouveau bénévole bien enregistré !')

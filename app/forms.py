@@ -15,6 +15,7 @@ class BenevoleForm(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
+    numero = StringField('Numéro de téléphone', validators=[DataRequired()])
     francais = StringField('Niveau de Francais', validators=[DataRequired()])
     anglais = StringField("Niveau d'Anglais", validators=[DataRequired()])
     espagnol = StringField("Niveau d'Espagnol", validators=[DataRequired()])

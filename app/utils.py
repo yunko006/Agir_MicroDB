@@ -24,3 +24,25 @@ def appartenance(champs):
 
     else:
         return f"{champs}"
+
+
+def convert_str_to_dict(string):
+    convertedDict = dict((x.strip(), y.strip())
+                         for x, y in (element.split(':')
+                                      for element in string.split(', ')))
+
+    return convertedDict
+
+
+def creation_dict(test_dict):
+    benevole = {}
+
+    # create a loop a travers le dictionnaire
+    for i, n in enumerate(test_dict):
+        # permet d'assigner la valeur des keys a mot clé afin d'executer la query
+        for k in list(test_dict.keys()):
+            appart = (appartenance(k))
+        # append chaque valeur dans le dict benevole
+        benevole[f"{appart}__{list(test_dict.keys())[i]}__icontains"] = f"{test_dict[n]}"
+
+    return benevole
