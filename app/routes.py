@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm
-from app.models import Benevole
+from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm
+from app.models import Benevole, Langues
 
-from app.utils import appartenance
+from app.utils import *
 
 
 @app.route('/index')
@@ -55,11 +55,24 @@ def register_benevole():
     benevole = BenevoleForm()
     if benevole.validate_on_submit():
         new_benevole = Benevole()
+        langues = Langues()
+        langues.francais = request.form['francais']
+        langues.anglais = request.form['anglais']
+        langues.espagnol = request.form['espagnol']
+        langues.allemand = request.form['allemand']
+        langues.italien = request.form['italien']
+        langues.portugais = request.form['portugais']
+        langues.chinois = request.form['chinois']
+        langues.russe = request.form['russe']
+        langues.arabe = request.form['arabe']
+        langues.autres = request.form['autres']
         new_benevole.id = int(request.form['id'])
         new_benevole.nom = request.form['nom']
         # print(type(request.form['nom']))
         new_benevole.prenom = request.form['prenom']
         new_benevole.email = request.form['email']
+        new_benevole.langues = langues
+
         new_benevole.save()
         flash('Succès ! Nouveau bénévole bien enregistré !')
         return redirect(url_for('get_benevoles'))
@@ -85,3 +98,17 @@ def update_benevole():
         return redirect(url_for('get_benevoles'))
 
     return render_template('update_benevole.html', title='Update_bénévole', update=update)
+
+
+@app.route('/recherche', methods=['GET', 'POST'])
+def query():
+    query = QueryForm()
+    if query.validate_on_submit():
+        recherche = request.form['query_field']
+        conv_recherche = convert_str_to_dict(recherche)
+        dict_recherche = creation_dict(conv_recherche)
+        benevoles = Benevole.objects(**dict_recherche)
+        # benevoles = Benevole.objects(nom__icontains="st")
+        return render_template('recherche.html', title='Recherche', recherche=recherche, benevoles=benevoles)
+
+    return render_template('recherche_form.html', title='Recherche', query=query)
