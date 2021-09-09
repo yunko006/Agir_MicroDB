@@ -26,6 +26,10 @@ class BenevoleForm(FlaskForm):
     russe = StringField('Niveau de Russe', validators=[DataRequired()])
     arabe = StringField('Niveau de Arabe', validators=[DataRequired()])
     autres = StringField('Autres', validators=[DataRequired()])
+    secteurs = StringField('Secteurs', validators=[DataRequired()])
+    domaines = StringField('Domaines', validators=[DataRequired()])
+    fonctions = StringField('Fonctions', validators=[DataRequired()])
+    competences = StringField('Compétences', validators=[DataRequired()])
     submit = SubmitField('Enregistrer')
 
 

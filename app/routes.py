@@ -57,6 +57,11 @@ def register_benevole():
         new_benevole = Benevole()
         langues = Langues()
         contact = Contact()
+        domaines_et_secteurs = DomainesEtSecteurs()
+        domaines_et_secteurs.secteurs = request.form['secteurs']
+        domaines_et_secteurs.domaines = request.form['domaines']
+        domaines_et_secteurs.fonctions = request.form['fonctions']
+        domaines_et_secteurs.compétences = request.form['competences']
         contact.numéro = request.form['numero']
         contact.email = request.form['email']
         langues.francais = request.form['francais']
@@ -76,6 +81,7 @@ def register_benevole():
 
         new_benevole.langues = langues
         new_benevole.contact = contact
+        new_benevole.DomainesEtSecteurs = domaines_et_secteurs
 
         new_benevole.save()
         flash('Succès ! Nouveau bénévole bien enregistré !')
@@ -91,7 +97,7 @@ def update_benevole():
         field = request.form['field']
         value = request.form['value']
         benevole_id = int(request.form['id'])
-        field_appartenance = appartenance(field)
+        field_appartenance = single_appartenance(field)
         update_dict = {
             f'set__{field_appartenance}__{field}': f'{value}'
         }
@@ -112,7 +118,9 @@ def query():
         conv_recherche = convert_str_to_dict(recherche)
         dict_recherche = creation_dict(conv_recherche)
         benevoles = Benevole.objects(**dict_recherche)
+        for benevole in benevoles:
+            print(benevole.nom)
         # benevoles = Benevole.objects(nom__icontains="st")
-        return render_template('recherche.html', title='Recherche', recherche=recherche, benevoles=benevoles)
+        return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
     return render_template('recherche_form.html', title='Recherche', query=query)

@@ -109,6 +109,34 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
+        <p>
+            {{ benevole.secteurs.label }}<br>
+            {{ benevole.secteurs(size=32) }}<br>
+            {% for error in benevole.secteurs.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.domaines.label }}<br>
+            {{ benevole.domaines(size=32) }}<br>
+            {% for error in benevole.domaines.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.fonctions.label }}<br>
+            {{ benevole.fonctions(size=32) }}<br>
+            {% for error in benevole.fonctions.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.competences.label }}<br>
+            {{ benevole.competences(size=32) }}<br>
+            {% for error in benevole.competences.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
         <p>{{ benevole.submit() }}</p>
     </form>
 {% endblock %}

@@ -1,6 +1,13 @@
 from app import db
 
 
+class DomainesEtSecteurs(db.EmbeddedDocument):
+    secteurs = db.StringField(required=True)
+    domaines = db.StringField(required=True)
+    fonctions = db.StringField(required=True)
+    compétences = db.StringField(required=True)
+
+
 class Contact(db.EmbeddedDocument):
     numéro = db.StringField(required=True)
     email = db.StringField(required=True)
@@ -25,5 +32,6 @@ class Benevole(db.Document):
     prenom = db.StringField()
     contact = db.EmbeddedDocumentField(Contact)
     langues = db.EmbeddedDocumentField(Langues)
+    DomainesEtSecteurs = db.EmbeddedDocumentField(DomainesEtSecteurs)
 
     meta = {'strict': False}
