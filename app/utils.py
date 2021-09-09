@@ -6,6 +6,7 @@ def appartenance(champs):
                "italien", "portuguais", "chinois", "russe", "arabe", "autres"]
     exp_international = ["roles", "experience_inter", "description_exp",
                          "experience_benevole", "connaissance_structure_inter"]
+    contact = ["numéro", "email"]
 
     if champs in inter:
         return "inter"
@@ -21,6 +22,9 @@ def appartenance(champs):
 
     elif champs in exp_international:
         return "exp_international"
+
+    elif champs in contact:
+        return "contact"
 
     else:
         return f"{champs}"

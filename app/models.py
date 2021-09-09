@@ -2,8 +2,8 @@ from app import db
 
 
 class Contact(db.EmbeddedDocument):
-    numéro_téléphone = db.StringField(required=True)
-    adresse_mail = db.StringField(required=True)
+    numéro = db.StringField(required=True)
+    email = db.StringField(required=True)
 
 
 class Langues(db.EmbeddedDocument):

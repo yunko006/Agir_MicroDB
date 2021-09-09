@@ -57,8 +57,8 @@ def register_benevole():
         new_benevole = Benevole()
         langues = Langues()
         contact = Contact()
-        contact.numéro_téléphone = request.form['numero']
-        contact.adresse_mail = request.form['email']
+        contact.numéro = request.form['numero']
+        contact.email = request.form['email']
         langues.francais = request.form['francais']
         langues.anglais = request.form['anglais']
         langues.espagnol = request.form['espagnol']
@@ -91,9 +91,9 @@ def update_benevole():
         field = request.form['field']
         value = request.form['value']
         benevole_id = int(request.form['id'])
-        # field_appartenance = appartenance(field)
+        field_appartenance = appartenance(field)
         update_dict = {
-            f'set__{field}': f'{value}'
+            f'set__{field_appartenance}__{field}': f'{value}'
         }
         Benevole.objects(id=benevole_id).update_one(
             **update_dict)
