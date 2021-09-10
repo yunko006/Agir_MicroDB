@@ -118,9 +118,12 @@ def query():
         conv_recherche = convert_str_to_dict(recherche)
         dict_recherche = creation_dict(conv_recherche)
         benevoles = Benevole.objects(**dict_recherche)
-        for benevole in benevoles:
-            print(benevole.nom)
         # benevoles = Benevole.objects(nom__icontains="st")
         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
     return render_template('recherche_form.html', title='Recherche', query=query)
+
+
+@app.route('/help')
+def help():
+    return render_template('help.html', title='Aide/FAQ')
