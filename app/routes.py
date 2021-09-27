@@ -111,14 +111,43 @@ def update_benevole():
 
 
 @app.route('/recherche', methods=['GET', 'POST'])
+# def query():
+#     query = QueryForm()
+#     if query.validate_on_submit():
+#         recherche = request.form['query_field']
+#         conv_recherche = convert_str_to_dict(recherche)
+#         dict_recherche = creation_dict(conv_recherche)
+#         benevoles = Benevole.objects(**dict_recherche)
+#         # benevoles = Benevole.objects(nom__icontains="st")
+#         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+#     return render_template('recherche_form.html', title='Recherche', query=query)
+# def query():
+#     query = QueryForm()
+#     if query.validate_on_submit():
+#         recherche = request.form['query_field']
+#         # faire attention a ce que n soit bien un int
+#         n = int(request.form['sliced'])
+#         while n != 0:
+#             conv_recherche = convert_str_to_dict(recherche, n)
+#             dict_recherche = creation_dict(conv_recherche)
+#             benevoles = Benevole.objects(**dict_recherche)
+#             if benevoles.count() != 0:
+#                 n -= 1
+#             else:
+#                 # benevoles = "Pas de bénévole associé a cette recherche."
+#                 # return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+#                 n -= 1
+#             return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+#     return render_template('recherche_form.html', title='Recherche', query=query)
 def query():
     query = QueryForm()
     if query.validate_on_submit():
         recherche = request.form['query_field']
-        conv_recherche = convert_str_to_dict(recherche)
-        dict_recherche = creation_dict(conv_recherche)
-        benevoles = Benevole.objects(**dict_recherche)
-        # benevoles = Benevole.objects(nom__icontains="st")
+        # faire attention a ce que n soit bien un int
+        n = int(request.form['sliced'])
+
+        benevoles = recursion_negative(recherche, n)
+
         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
     return render_template('recherche_form.html', title='Recherche', query=query)
