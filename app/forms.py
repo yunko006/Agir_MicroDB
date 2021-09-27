@@ -42,4 +42,5 @@ class UpdateBenevoleForm(FlaskForm):
 
 class QueryForm(FlaskForm):
     query_field = StringField('Recherche', validators=[DataRequired()])
+    sliced = StringField('Numbre', validators=[DataRequired()])
     submit = SubmitField('Rechercher')
