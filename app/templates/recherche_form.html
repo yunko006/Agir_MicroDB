@@ -12,6 +12,13 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
+        <p>
+            {{ query.sliced.label}}<br>
+            {{ query.sliced(size=32)}}<br>
+            {% for error in query.sliced.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
         <p>{{ query.submit() }}</p>
     </form>
 {% endblock %}
