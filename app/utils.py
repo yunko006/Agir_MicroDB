@@ -74,14 +74,6 @@ def convert_str_to_dict(string: str, n: int):
     return convertedDict
 
 
-def convert_str_to_dict_deux(string: str):
-    convertedDict = dict((x.strip(), y.strip())
-                         for x, y in (element.split(':')
-                                      for element in string.split(', ')))
-
-    return convertedDict
-
-
 def creation_dict(test_dict: dict):
     benevole = {}
     # permet d'assigner la valeur des keys a mot clé afin d'executer la query
@@ -94,44 +86,6 @@ def creation_dict(test_dict: dict):
     return benevole
 
 
-def recursion_negative(query: str, n: int) -> dict:
-
-    final_dict = {}
-    convert_str = convert_str_to_dict(query, n)
-    query_dict = creation_dict(convert_str)
-
-    # print(benevoles.count())
-
-    # permet de break la recursion :
-    if n != 0:
-
-        benevoles = Benevole.objects(**query_dict)
-
-        # TODO
-        if benevoles.count() != 0:
-            # print(
-            #     f"Bénévoles associés à la recherche: {query_dict.keys()}")
-            # {recherche(query_dict): benevole.nom1, benevole.nom2, etc}
-            final_dict[f"{query_dict.values()}"] = [
-                benevole.nom for benevole in benevoles]
-
-            n -= 1
-
-            return final_dict, recursion_negative(query, n)
-
-        else:
-            # print(
-            #     f"Pas de bénévoles associés à la recherche: {query_dict.keys()}")
-            # {recherche(query_dict): Pas de bénévole associé}
-            final_dict[f"{query_dict.values()}"] = "Pas de bénévoles associés à la recherche"
-
-            n -= 1
-            return final_dict, recursion_negative(query, n)
-
-    else:
-        return 'La recherche est arrivée à sont terme.'
-
-
 def query_function(query: str, n: int) ->dict:
     final_dict = {}
     lenght = (len(query.split(',')))
@@ -140,7 +94,6 @@ def query_function(query: str, n: int) ->dict:
 
     while n != (lenght + 1):
 
-        print(f"Ce tour le dict est: {convert_str}")
         query_dict = creation_dict(convert_str)
 
         benevoles = Benevole.objects(**query_dict)
