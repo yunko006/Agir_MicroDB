@@ -74,6 +74,14 @@ def convert_str_to_dict(string: str, n: int):
     return convertedDict
 
 
+def convert_str_to_dict_deux(string: str):
+    convertedDict = dict((x.strip(), y.strip())
+                         for x, y in (element.split(':')
+                                      for element in string.split(', ')))
+
+    return convertedDict
+
+
 def creation_dict(test_dict: dict):
     benevole = {}
     # permet d'assigner la valeur des keys a mot clé afin d'executer la query
@@ -122,3 +130,42 @@ def recursion_negative(query: str, n: int) -> dict:
 
     else:
         return 'La recherche est arrivée à sont terme.'
+
+
+def query_function(query: str, n: int) ->dict:
+    final_dict = {}
+    lenght = (len(query.split(',')))
+
+    convert_str = convert_str_to_dict(query, n)
+
+    while n != (lenght + 1):
+
+        print(f"Ce tour le dict est: {convert_str}")
+        query_dict = creation_dict(convert_str)
+
+        benevoles = Benevole.objects(**query_dict)
+
+        if benevoles.count() != 0:
+            final_dict[f"{query_dict.values()}"] = [
+                benevole.nom for benevole in benevoles]
+            # print(final_dict)
+            n += 1
+            convert_str = convert_str_to_dict(query, n)
+
+        else:
+            final_dict[f"{query_dict.values()}"] = "Pas de bénévoles associés à la recherche"
+            # print(f"Pas de bénévoles: {final_dict}")
+            new_query = pop_item(query, n)
+            n += 1
+            convert_str = convert_str_to_dict(new_query, n)
+
+    return final_dict
+
+
+def pop_item(query:str, n:int) ->str:
+
+    query_list = query.split(',')
+    query_list.pop(n - 1)
+    new_query = ','.join(query_list)
+
+    return new_query
