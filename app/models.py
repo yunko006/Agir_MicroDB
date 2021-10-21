@@ -1,5 +1,10 @@
 from app import db
 
+class ExperienceInterBenevole(db.EmbeddedDocument):
+    roles = db.StringField(required=True)
+    expérience_internationale = db.StringField()
+    expérience_internationale_benevole = db.StringField()
+
 
 class DomainesEtSecteurs(db.EmbeddedDocument):
     secteurs = db.StringField(required=True)
@@ -33,5 +38,6 @@ class Benevole(db.Document):
     contact = db.EmbeddedDocumentField(Contact)
     langues = db.EmbeddedDocumentField(Langues)
     DomainesEtSecteurs = db.EmbeddedDocumentField(DomainesEtSecteurs)
+    ExperienceInterBenevole = db.EmbeddedDocumentField(ExperienceInterBenevole)
 
     meta = {'strict': False}

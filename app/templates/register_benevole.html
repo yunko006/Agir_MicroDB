@@ -137,6 +137,27 @@
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
+        <p>
+            {{ benevole.roles.label }}<br>
+            {{ benevole.roles(size=32) }}<br>
+            {% for error in benevole.roles.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.expérience_internationale.label }}<br>
+            {{ benevole.expérience_internationale(size=32) }}<br>
+            {% for error in benevole.expérience_internationale.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ benevole.expérience_internationale_benevole.label }}<br>
+            {{ benevole.expérience_internationale_benevole(size=32) }}<br>
+            {% for error in benevole.expérience_internationale_benevole.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
         <p>{{ benevole.submit() }}</p>
     </form>
 {% endblock %}

@@ -8,8 +8,7 @@ def appartenance(champs: dict):
     dispo = ["missions", "projets", "duree_en_mois", "nb_deplacements_par_an"]
     langues = ["francais", "anglais", "allemand", "espagnol",
                "italien", "portuguais", "chinois", "russe", "arabe", "autres"]
-    exp_international = ["roles", "experience_inter", "description_exp",
-                         "experience_benevole", "connaissance_structure_inter"]
+    ExperienceInterBenevole = ["roles", "expérience_internationale", "expérience_internationale_benevole"]
     for champ in champs.keys():
 
         if champ in inter:
@@ -24,8 +23,8 @@ def appartenance(champs: dict):
         elif champ in langues:
             appart.append("langues")
 
-        elif champ in exp_international:
-            appart.append("exp_international")
+        elif champ in ExperienceInterBenevole:
+            appart.append("ExperienceInterBenevole")
 
     return appart
 # resultat = {

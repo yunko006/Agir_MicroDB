@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField
 from wtforms.validators import DataRequired
 
 
@@ -30,6 +30,9 @@ class BenevoleForm(FlaskForm):
     domaines = StringField('Domaines', validators=[DataRequired()])
     fonctions = StringField('Fonctions', validators=[DataRequired()])
     competences = StringField('Compétences', validators=[DataRequired()])
+    roles = StringField('Roles', validators=[DataRequired()])
+    expérience_internationale = StringField('Expérience Internationale', validators=[DataRequired()])
+    expérience_internationale_benevole = StringField('Expérience Internationale comme Bénévole', validators=[DataRequired()])
     submit = SubmitField('Enregistrer')
 
 
@@ -44,3 +47,11 @@ class QueryForm(FlaskForm):
     query_field = StringField('Recherche', validators=[DataRequired()])
     sliced = StringField('Numbre', validators=[DataRequired()])
     submit = SubmitField('Rechercher')
+
+
+class ChampsForm(FlaskForm):
+    champs = SelectMultipleField(u'Champs', choices=[(
+        'francais', 'Francais'), ('compétences', 'Compétences'), ('domaines', 'Domaines')])
+    recherche = StringField('Recherche', validators=[DataRequired()])
+    nombre_mot_clé = StringField('Nombre', validators=[DataRequired()])
+    submit = SubmitField('Submit')
