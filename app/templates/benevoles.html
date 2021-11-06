@@ -19,6 +19,7 @@
                 <td>{{ benevole.nom }}</td>
                 <td>{{ benevole.prenom }}</td>
                 <td>{{ benevole.contact.email }}</td>
+                <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td>
             </tr>
             {% endfor %}
         </tbody>
