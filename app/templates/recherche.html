@@ -2,7 +2,10 @@
 
 {% block content %}
 <h2>Votre recherche: {{recherche}} a produit les résultats suivant: </h2>
-{% for benevole in benevoles %}
-    {{ benevole }}
-{% endfor %}
+    {% for k,v in benevoles.items() %}
+    <ul>
+        <li> {{ k }}: {{ v }} </li>
+    </ul>
+    {% endfor %}
+
 {% endblock %}
