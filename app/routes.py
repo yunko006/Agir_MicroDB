@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm
+from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, ChampsForm
 from app.models import *
 
 from app.utils import *
-
+import json
 
 @app.route('/index')
 def index():
@@ -57,6 +57,7 @@ def register_benevole():
         new_benevole = Benevole()
         langues = Langues()
         contact = Contact()
+        experience_inter_benevole = ExperienceInterBenevole()
         domaines_et_secteurs = DomainesEtSecteurs()
         domaines_et_secteurs.secteurs = request.form['secteurs']
         domaines_et_secteurs.domaines = request.form['domaines']
@@ -74,14 +75,17 @@ def register_benevole():
         langues.russe = request.form['russe']
         langues.arabe = request.form['arabe']
         langues.autres = request.form['autres']
+        experience_inter_benevole.roles = request.form['roles']
+        experience_inter_benevole.expérience_internationale = request.form['expérience_internationale']
+        experience_inter_benevole.expérience_internationale_benevole = request.form['expérience_internationale_benevole']
         new_benevole.id = int(request.form['id'])
         new_benevole.nom = request.form['nom']
-        # print(type(request.form['nom']))
         new_benevole.prenom = request.form['prenom']
 
         new_benevole.langues = langues
         new_benevole.contact = contact
         new_benevole.DomainesEtSecteurs = domaines_et_secteurs
+        new_benevole.ExperienceInterBenevole = experience_inter_benevole
 
         new_benevole.save()
         flash('Succès ! Nouveau bénévole bien enregistré !')
@@ -111,34 +115,6 @@ def update_benevole():
 
 
 @app.route('/recherche', methods=['GET', 'POST'])
-# def query():
-#     query = QueryForm()
-#     if query.validate_on_submit():
-#         recherche = request.form['query_field']
-#         conv_recherche = convert_str_to_dict(recherche)
-#         dict_recherche = creation_dict(conv_recherche)
-#         benevoles = Benevole.objects(**dict_recherche)
-#         # benevoles = Benevole.objects(nom__icontains="st")
-#         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
-#     return render_template('recherche_form.html', title='Recherche', query=query)
-# def query():
-#     query = QueryForm()
-#     if query.validate_on_submit():
-#         recherche = request.form['query_field']
-#         # faire attention a ce que n soit bien un int
-#         n = int(request.form['sliced'])
-#         while n != 0:
-#             conv_recherche = convert_str_to_dict(recherche, n)
-#             dict_recherche = creation_dict(conv_recherche)
-#             benevoles = Benevole.objects(**dict_recherche)
-#             if benevoles.count() != 0:
-#                 n -= 1
-#             else:
-#                 # benevoles = "Pas de bénévole associé a cette recherche."
-#                 # return render_template('recherche.html', title='Recherche', benevoles=benevoles)
-#                 n -= 1
-#             return render_template('recherche.html', title='Recherche', benevoles=benevoles)
-#     return render_template('recherche_form.html', title='Recherche', query=query)
 def query():
     query = QueryForm()
     if query.validate_on_submit():
@@ -146,7 +122,8 @@ def query():
         # faire attention a ce que n soit bien un int
         n = int(request.form['sliced'])
 
-        benevoles = recursion_negative(recherche, n)
+        benevoles = query_function(recherche, n)
+        print(benevoles)
 
         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
@@ -156,3 +133,91 @@ def query():
 @app.route('/help')
 def help():
     return render_template('help.html', title='Aide/FAQ')
+
+
+@app.route('/drop_down', methods=['GET', 'POST'])
+def drop_down():
+    #form = ChampsForm()
+    # test = form.champs.choices
+    # print(test)
+    # if form.validate_on_submit():
+
+    #     for arg in request.form:
+    #         print(arg, request.form.getlist(arg))
+    #     choice = request.form['champs']
+    #     # query = request.form['recherche']
+    #     # n = int(request.form['nombre_mot_clé'])
+    #     # print(choice)
+    #     if choice == 'francais':
+    #         print('fr')
+    #         # combinaison = f"{choice}:{query}"
+    #         # converted = convert_str_to_dict(combinaison, n)
+    #         # print(converted)
+    #         # dicted = creation_dict(converted)
+
+    #         # print(dicted)
+
+    #         # benevoles = Benevole.objects(**dicted)
+
+    #         # for b in benevoles:
+    #         #     print(b.nom)
+    #     else:
+    #         print('autre')
+
+    # for arg in request.form:
+    #     print(arg, request.form.getlist(arg))
+
+    #     # return redirect(url_for('drop_down'))
+
+    # xd = request.form.copy()
+    # print(xd)
+
+    if request.method == "POST":
+        recherche = request.form['recherche']
+        print(recherche)
+        champs = request.form['champs']
+        print(champs)
+
+        for arg in request.form:
+            print(arg, request.form.getlist(arg))
+
+        print(request.form.getlist('recherche'))
+
+        return render_template('dropdown.html', title='Drop')
+    else:
+        return render_template('dropdown.html', title='DropDown')
+
+
+@app.route('/recherche8', methods=['GET', 'POST'])
+def recherche8():
+    if request.method == 'POST':
+        recherche_list = request.form.getlist('recherche')
+        champs_list= request.form.getlist('champs')
+
+        recherche = [string for string in recherche_list if string]
+        champs = champs_list[:len(recherche)]
+        print(recherche)
+        print(champs)
+        # zip peut entrainer un bug si deux champs sont egaux !!!! normalement aucun champs égaux
+        resultat_dict = dict(zip(champs, recherche))
+        print(resultat_dict)
+        query = str(resultat_dict)
+        for ch in ['{', '}', "'"]:
+            if ch in query:
+                query = query.replace(ch, '')
+
+        print(query)
+        benevoles = query_function(query, 1)
+        print(benevoles)
+        return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+
+    else:
+        return render_template('query8.html', title='Huit')
+
+
+@app.route('/bénévole/<id>')
+def benevole(id):
+    benevole = Benevole.objects(id=id)
+    # for b in benevole:
+    #     print(b.nom)
+    return render_template('benevole_by_id.html', benevole=benevole)
