@@ -207,8 +207,9 @@ def recherche8():
                 query = query.replace(ch, '')
 
         print(query)
+
         benevoles = query_function(query, 1)
-        print(benevoles)
+        # print(benevoles)
         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
     else:

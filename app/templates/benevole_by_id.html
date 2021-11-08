@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% for b in benevole %}
-    <h1>Bénévoles : {{ b.nom }} </h1>
-    <ul>
-        <li> {{ b.prenom}}</li>
-    </ul>
-{% endfor %}
+    {% for b in benevole %}
+        <h1>Bénévoles : {{ b.nom }} </h1>
+        <ul>
+            <li> {{ b.prenom}}</li>
+        </ul>
+    {% endfor %}
 
 {% endblock %}

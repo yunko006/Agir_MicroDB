@@ -2,9 +2,15 @@
 
 {% block content %}
 <h2>Votre recherche: {{recherche}} a produit les résultats suivant: </h2>
-    {% for k,v in benevoles.items() %}
-    <ul>
-        <li> {{ k }}: {{ v }} </li>
+    {% for k, benevole in benevoles.items() %}
+    <ul> {{ k }} </ul>
+        {% for b in benevole %}
+            {% if b is not string %}
+            <li>{{ b.nom }} <a href="{{ url_for('benevole', id=b.id) }}">Voir sa fiche</a></li>
+            {% else %}
+            <li> Pas dé bénévoles associés à la recherche </li>
+            {% endif %}
+        {% endfor %}
     </ul>
     {% endfor %}
 

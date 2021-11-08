@@ -102,13 +102,13 @@ def query_function(query: str, n: int) ->dict:
 
         if benevoles.count() != 0:
 
-            final_dict[x] = [benevole.nom for benevole in benevoles]
+            final_dict[x] = [benevole for benevole in benevoles]
             n += 1
             convert_str = convert_str_to_dict(query, n)
 
         else:
-
-            final_dict[x] = "Pas dé bénévoles"
+            # list pour permettre de fix les soucis dans recherche.html pas opti
+            final_dict[x] = ["Pas dé bénévoles"]
 
             new_query = pop_item(query, n)
             n += 1
