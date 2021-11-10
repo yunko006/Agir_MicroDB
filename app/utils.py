@@ -124,3 +124,11 @@ def pop_item(query:str, n:int) ->str:
     new_query = ','.join(query_list)
 
     return new_query
+
+def clean_data(query:str):
+
+    for ch in ['{', '}', "'", "(", ")"]:
+            if ch in query:
+                query = query.replace(ch, '')
+
+    return query
