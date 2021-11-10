@@ -2,9 +2,36 @@
 
 {% block content %}
     {% for b in benevole %}
-        <h1>Bénévoles : {{ b.nom }} </h1>
-        <ul>
-            <li> {{ b.prenom}}</li>
+        <h1>Bénévole : {{ b.nom }} {{ b.prenom}} </h1>
+        <h3>Numéro d'adhérent : {{ b.id}} </h3>
+        <ul> <p> Informations personnelles </p> </ul>
+            <li> Mail : {{ b.contact.email}} </li>
+            <li> Numéro : {{ b.contact.numéro}} </li>
+
+        <ul> <p>Domaines et Secteurs d'expertise</p>
+            <li> Secteurs : {{ b.DomainesEtSecteurs.secteurs }}</li>
+            <li> Domaines : {{ b.DomainesEtSecteurs.domaines }}</li>
+            <li> Compétences : {{ b.DomainesEtSecteurs.compétences }}</li>
+            <li> Fonctions : {{ b.DomainesEtSecteurs.fonctions }}</li>
+        </ul>
+
+        <ul> <p>Expérience Internationnale </p>
+            <li> Rôles : {{ b.ExperienceInterBenevole.roles }}</li>
+            <li> Expérience internationnale : {{ b.ExperienceInterBenevole.expérience_internationale }}</li>
+            <li> Expérience internationnale comme bénévole : {{ b.ExperienceInterBenevole.expérience_internationale_benevole }}</li>
+        </ul>
+
+        <ul> <p> Niveau de langue </p>
+            <li>Francais : {{b.langues.francais }} </li>
+            <li>Anglais : {{b.langues.anglais }} </li>
+            <li>Italien : {{b.langues.italien }} </li>
+            <li>Espagnol : {{b.langues.espagnol }} </li>
+            <li>Allemand : {{b.langues.allemand }} </li>
+            <li>Portugais : {{b.langues.portugais }} </li>
+            <li>Chinois : {{b.langues.chinois }} </li>
+            <li>Russe : {{b.langues.russe }} </li>
+            <li>Arabe : {{b.langues.arabe }} </li>
+            <li>Autres langues : {{b.langues.autres }} </li>
         </ul>
     {% endfor %}
 
