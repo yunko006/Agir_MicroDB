@@ -4,6 +4,7 @@ from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, Ch
 from app.models import *
 
 from app.utils import *
+from app.utils2 import *
 import json
 
 @app.route('/index')
@@ -194,22 +195,19 @@ def recherche8():
         recherche_list = request.form.getlist('recherche')
         champs_list= request.form.getlist('champs')
 
+        # recherche and champs fields without blank one
         recherche = [string for string in recherche_list if string]
         champs = champs_list[:len(recherche)]
-        print(recherche)
-        print(champs)
+
         # zip peut entrainer un bug si deux champs sont egaux !!!! normalement aucun champs égaux
         resultat_dict = dict(zip(champs, recherche))
-        print(resultat_dict)
         query = str(resultat_dict)
-        for ch in ['{', '}', "'"]:
-            if ch in query:
-                query = query.replace(ch, '')
+        clean_query = clean_data(query)
 
-        print(query)
+        # Two mains functions to run the query :
+        final = input_to_validate_data(clean_query)
+        benevoles = query_by_element(final)
 
-        benevoles = query_function(query, 1)
-        # print(benevoles)
         return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
     else:
@@ -219,6 +217,5 @@ def recherche8():
 @app.route('/bénévole/<id>')
 def benevole(id):
     benevole = Benevole.objects(id=id)
-    # for b in benevole:
-    #     print(b.nom)
+
     return render_template('benevole_by_id.html', benevole=benevole)
