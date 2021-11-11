@@ -119,3 +119,21 @@ def query_by_element(d:dict):
             query_result[x] = ['Pas de résulat.']
 
     return query_result
+
+
+def queryset_by_element(d:dict, query_set):
+
+    query_result = {}
+
+    for i, subdict in enumerate(d):
+        # print(subdict)
+        x = " ".join(list(subdict.values()))
+        benevoles = query_set(**subdict)
+
+        if benevoles.count() != 0:
+            query_result[x] = [benevole for benevole in benevoles]
+
+        else:
+            query_result[x] = ['Pas de résulat.']
+
+    return query_result
