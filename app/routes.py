@@ -5,7 +5,8 @@ from app.models import *
 
 from app.utils import *
 from app.utils2 import *
-import json
+# from app.update_db import update_benevole_with_volontaire_fied
+# import json
 
 @app.route('/index')
 def index():
@@ -219,3 +220,10 @@ def benevole(id):
     benevole = Benevole.objects(id=id)
 
     return render_template('benevole_by_id.html', benevole=benevole)
+
+# @app.route('/uwu')
+# def update_uwu():
+
+#     xd = update_benevole_with_volontaire_fied()
+
+#     return xd

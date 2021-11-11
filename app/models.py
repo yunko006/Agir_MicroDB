@@ -1,5 +1,10 @@
 from app import db
 
+
+class Volontaire(db.EmbeddedDocument):
+    inter = db.BooleanField(required=True, default=True)
+    france_uniquement = db.BooleanField(default=False)
+
 class ExperienceInterBenevole(db.EmbeddedDocument):
     roles = db.StringField(required=True)
     expérience_internationale = db.StringField()
@@ -39,5 +44,6 @@ class Benevole(db.Document):
     langues = db.EmbeddedDocumentField(Langues)
     DomainesEtSecteurs = db.EmbeddedDocumentField(DomainesEtSecteurs)
     ExperienceInterBenevole = db.EmbeddedDocumentField(ExperienceInterBenevole)
+    volontaire = db.EmbeddedDocumentField(Volontaire)
 
     meta = {'strict': False}

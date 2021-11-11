@@ -4,9 +4,19 @@
     {% for b in benevole %}
         <h1>Bénévole : {{ b.nom }} {{ b.prenom}} </h1>
         <h3>Numéro d'adhérent : {{ b.id}} </h3>
-        <ul> <p> Informations personnelles </p> </ul>
+        <ul> <p> Informations personnelles </p>
             <li> Mail : {{ b.contact.email}} </li>
             <li> Numéro : {{ b.contact.numéro}} </li>
+        </ul>
+
+        <ul>
+            <p> Volontaire </p>
+            {% if b.volontaire.inter %}
+            <li> Oui </li>
+            {% else %}
+            <li> Non </li>
+            {% endif %}
+        </ul>
 
         <ul> <p>Domaines et Secteurs d'expertise</p>
             <li> Secteurs : {{ b.DomainesEtSecteurs.secteurs }}</li>
