@@ -108,7 +108,7 @@ def query_by_element(d:dict):
     query_result = {}
 
     for i, subdict in enumerate(d):
-        print(subdict)
+        # print(subdict)
         x = " ".join(list(subdict.values()))
         benevoles = Benevole.objects(**subdict)
 
