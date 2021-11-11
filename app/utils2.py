@@ -71,7 +71,7 @@ def recherche(query:str):
     query_into_list = ['francais:maternelle', 'compétences:création', 'fonctions:enseigant']
     combinaison = combinaison(query_into_list)
     final_dict = {}
-    print(combinaison)
+    # print(combinaison)
 
     for i in range(0, len(combinaison) +1):
 
