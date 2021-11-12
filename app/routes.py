@@ -4,7 +4,7 @@ from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, Ch
 from app.models import *
 
 from app.utils import *
-from app.utils2 import *
+
 # from app.update_db import update_benevole_with_volontaire_fied
 # import json
 
@@ -119,46 +119,24 @@ def recherche8():
     if request.method == 'POST':
         recherche_list = request.form.getlist('recherche')
         champs_list= request.form.getlist('champs')
+
         check_inter = request.form.get('Inter')
-        # print(check_inter)
         check_france = request.form.get('France')
-        # print(check_france)
 
         if request.form.get('Inter'):
-            benevolesy = Benevole.objects(volontaire__inter=True)
+            queryset_benevoles = Benevole.objects(volontaire__inter=True)
 
-            print([b.nom for b in benevolesy])
-            # recherche and champs fields without blank one
-            recherche = [string for string in recherche_list if string]
-            champs = champs_list[:len(recherche)]
 
-            # zip peut entrainer un bug si deux champs sont egaux !!!! normalement aucun champs égaux
-            resultat_dict = dict(zip(champs, recherche))
-            query = str(resultat_dict)
-            clean_query = clean_data(query)
-
-            # Two mains functions to run the query :
-            final = input_to_validate_data(clean_query)
-            benevoles = queryset_by_element(final, benevolesy)
+            final_query = convertion(recherche_list, champs_list)
+            benevoles = queryset_by_element(final_query, queryset_benevoles)
 
             return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
         if request.form.get('France'):
-            benevolesy = Benevole.objects(volontaire__france_uniquement=True)
+            queryset_benevoles = Benevole.objects(volontaire__france_uniquement=True)
 
-            print([b.nom for b in benevolesy])
-            # recherche and champs fields without blank one
-            recherche = [string for string in recherche_list if string]
-            champs = champs_list[:len(recherche)]
-
-            # zip peut entrainer un bug si deux champs sont egaux !!!! normalement aucun champs égaux
-            resultat_dict = dict(zip(champs, recherche))
-            query = str(resultat_dict)
-            clean_query = clean_data(query)
-
-            # Two mains functions to run the query :
-            final = input_to_validate_data(clean_query)
-            benevoles = queryset_by_element(final, benevolesy)
+            final_query = convertion(recherche_list, champs_list)
+            benevoles = queryset_by_element(final_query, queryset_benevoles)
 
             return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
