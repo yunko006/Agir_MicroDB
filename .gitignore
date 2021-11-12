@@ -115,3 +115,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 app/utils2.py
+app/templates/dropdown.html
+app/templates/dropdown2.html
+.DS_Store
