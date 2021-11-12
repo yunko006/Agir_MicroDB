@@ -1,9 +1,10 @@
+import itertools
 from app.models import Benevole
 
 
 def appartenance(champs: dict):
     appart = []
-    inter = ["volontaire", 'hésitation']
+
     DomainesEtSecteurs = ["secteurs", "domaines", "fonctions", "compétences"]
     dispo = ["missions", "projets", "duree_en_mois", "nb_deplacements_par_an"]
     langues = ["francais", "anglais", "allemand", "espagnol",
@@ -11,10 +12,7 @@ def appartenance(champs: dict):
     ExperienceInterBenevole = ["roles", "expérience_internationale", "expérience_internationale_benevole"]
     for champ in champs.keys():
 
-        if champ in inter:
-            appart.append("inter")
-
-        elif champ in DomainesEtSecteurs:
+        if champ in DomainesEtSecteurs:
             appart.append("DomainesEtSecteurs")
 
         elif champ in dispo:
@@ -27,10 +25,6 @@ def appartenance(champs: dict):
             appart.append("ExperienceInterBenevole")
 
     return appart
-# resultat = {
-#   'langues__anglais__icontains': 'notions',
-#   'langues__francais__icontains': 'maternelle
-#}
 
 
 def single_appartenance(champs: str):
@@ -65,14 +59,6 @@ def single_appartenance(champs: str):
         return f"{champs}"
 
 
-def convert_str_to_dict(string: str, n: int):
-    convertedDict = dict((x.strip(), y.strip())
-                         for x, y in (element.split(':')
-                                      for element in string.split(', ')[:n]))
-
-    return convertedDict
-
-
 def creation_dict(test_dict: dict):
     benevole = {}
     # permet d'assigner la valeur des keys a mot clé afin d'executer la query
@@ -85,46 +71,6 @@ def creation_dict(test_dict: dict):
     return benevole
 
 
-def query_function(query: str, n: int) ->dict:
-    """
-    Teste les combinaisons d'input et appends les résultats dans un dict
-    """
-    final_dict = {}
-    lenght = (len(query.split(',')))
-
-    convert_str = convert_str_to_dict(query, n)
-
-    while n != (lenght + 1):
-
-        query_dict = creation_dict(convert_str)
-        x = " ".join(list(query_dict.values()))
-        benevoles = Benevole.objects(**query_dict)
-
-        if benevoles.count() != 0:
-
-            final_dict[x] = [benevole for benevole in benevoles]
-            n += 1
-            convert_str = convert_str_to_dict(query, n)
-
-        else:
-            # list pour permettre de fix les soucis dans recherche.html pas opti
-            final_dict[x] = ["Pas dé bénévoles"]
-
-            new_query = pop_item(query, n)
-            n += 1
-            convert_str = convert_str_to_dict(new_query, n)
-
-    return final_dict
-
-
-def pop_item(query:str, n:int) ->str:
-
-    query_list = query.split(',')
-    query_list.pop(n - 1)
-    new_query = ','.join(query_list)
-
-    return new_query
-
 def clean_data(query:str):
 
     for ch in ['{', '}', "'", "(", ")"]:
@@ -132,3 +78,110 @@ def clean_data(query:str):
                 query = query.replace(ch, '')
 
     return query
+
+
+def combinaison(l:list) -> list:
+    combination_list = []
+    for L in range(1, len(l)+1):
+        for subset in itertools.combinations(l, L):
+            if subset[0] == l[0]:
+                combination_list.append(subset)
+
+    return combination_list
+
+
+def convert_str_to_dict(string):
+    convertedDict = dict((x.strip(), y.strip())
+                         for x, y in (element.split(':')
+                                      for element in string.split(', ')))
+
+    return convertedDict
+
+
+def tuple_to_str(tup:tuple) ->str:
+    a = ', '.join(tup)
+    return a
+
+
+def creation_dict(test_dict: dict) -> dict:
+    benevole = {}
+
+    appart = appartenance(test_dict)
+    # print(appart)
+    # create a loop a travers le dictionnaire
+    for i, n in enumerate(test_dict):
+        # permet d'assigner la valeur des keys a mot clé afin d'executer la query
+
+        # append chaque valeur dans le dict benevole
+        benevole[f"{appart[i]}__{list(test_dict.keys())[i]}__icontains"] = f"{test_dict[n]}"
+
+    return benevole
+
+
+def input_to_validate_data(user_input:str) -> list:
+    research_list = []
+
+    user_input_as_list = user_input.split(',')
+    # print(user_input_as_list)
+    combinations = combinaison(user_input_as_list)
+
+    for tup in combinations:
+        clean_str = tuple_to_str(tup)
+        dict_convert = convert_str_to_dict(clean_str)
+        dict_to_append = creation_dict(dict_convert)
+
+        research_list.append(dict_to_append)
+
+    return research_list
+
+
+def queryset_by_element(d:dict, query_set) -> dict:
+    """
+    Take a QuerySet, for each subdict in d append them to a new dict and match a benevole object
+
+    Parameters
+    ...
+    d: dict
+        the dict with every combination in it
+    query_set : QuerySet
+        The QuerySet from the mongodb
+
+    Returns
+    ...
+    dict
+        a new dict
+    """
+
+    query_result = {}
+
+    for i, subdict in enumerate(d):
+        # print(subdict)
+        x = " ".join(list(subdict.values()))
+        benevoles = query_set(**subdict)
+
+        if benevoles.count() != 0:
+            query_result[x] = [benevole for benevole in benevoles]
+
+        else:
+            query_result[x] = ['Pas de résulat.']
+
+    return query_result
+
+
+def convertion(recherche_list, champs_list):
+    """
+    Convert data from the form to data which can be used in the main function: queryset_by_element
+    """
+    # recherche and champs fields without blank one
+    recherche = [string for string in recherche_list if string]
+    champs = champs_list[:len(recherche)]
+
+    # zip peut entrainer un bug si deux champs sont egaux !!!! normalement aucun champs égaux
+    resultat_dict = dict(zip(champs, recherche))
+    query = str(resultat_dict)
+    clean_query = clean_data(query)
+
+    # Two mains functions to run the query :
+    final = input_to_validate_data(clean_query)
+
+    return final
