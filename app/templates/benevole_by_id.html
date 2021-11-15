@@ -18,6 +18,12 @@
             {% endif %}
         </ul>
 
+        <ul> <p>Disponibilités </p>
+            <li>Type de mission/projet : {{ b.disponibilités.mission_ou_projet }}</li>
+            <li>Durée du déplacement : {{ b.disponibilités.durée }}</li>
+            <li>Nombre de déplacements : {{ b.disponibilités.nb_déplacements }}</li>
+        </ul>
+
         <ul> <p>Domaines et Secteurs d'expertise</p>
             <li> Secteurs : {{ b.DomainesEtSecteurs.secteurs }}</li>
             <li> Domaines : {{ b.DomainesEtSecteurs.domaines }}</li>

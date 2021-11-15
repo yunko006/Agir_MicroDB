@@ -6,7 +6,7 @@
     <ul> {{ k }} </ul>
         {% for b in benevole %}
             {% if b is not string %}
-            <li>{{ b.nom }} <a href="{{ url_for('benevole', id=b.id) }}">Voir sa fiche</a></li>
+            <li> <a href="{{ url_for('benevole', id=b.id) }}"> {{ b.nom }} </a></li>
             {% else %}
             <li> Pas dé bénévoles associés à la recherche </li>
             {% endif %}
