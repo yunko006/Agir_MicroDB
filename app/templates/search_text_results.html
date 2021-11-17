@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Votre recherche : {{ search }} a produit les résultats suivants :</h2>
+{% for benevole in benevoles %}
+    <li> <a href="{{ url_for('benevole', id=benevole.id) }}"> {{ benevole.nom }} </a></li>
+{% endfor %}
+
+{% endblock %}

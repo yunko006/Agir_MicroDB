@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, ChampsForm
+from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, ChampsForm, SearchTextForm
 from app.models import *
 
 from app.utils import *
@@ -149,6 +149,25 @@ def benevole(id):
     benevole = Benevole.objects(id=id)
 
     return render_template('benevole_by_id.html', benevole=benevole)
+
+
+@app.route('/search_text', methods=['GET', 'POST'])
+def search_text():
+    search_form = SearchTextForm()
+
+    if search_form.validate_on_submit() and request.method == 'POST':
+        search = request.form['search']
+        print(search)
+
+        benevoles = Benevole.objects.search_text(search).order_by('$text_score')
+        print(benevoles)
+
+
+        return render_template('search_text_results.html', benevoles=benevoles, search=search)
+
+    return render_template('search_test_form.html', title='Search Text', search_form=search_form)
+
+
 
 @app.route('/force_update')
 def update_db_from_script():

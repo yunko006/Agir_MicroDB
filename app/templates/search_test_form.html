@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Effectuez une recherche dans la base de donnée </h1>
+    <form action="" method="post" novalidate>
+        {{ search_form.hidden_tag() }}
+
+        <p>
+            {{ search_form.search.label }}<br>
+            {{ search_form.search(size=32) }}<br>
+            {% for error in search_form.search.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+
+        <p>{{ search_form.submit() }}</p>
+    </form>
+{% endblock %}

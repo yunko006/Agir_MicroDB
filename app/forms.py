@@ -55,3 +55,8 @@ class ChampsForm(FlaskForm):
     recherche = StringField('Recherche', validators=[DataRequired()])
     nombre_mot_clé = StringField('Nombre', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class SearchTextForm(FlaskForm):
+    search = StringField('Recherche', validators=[DataRequired()])
+    submit = SubmitField('Submit')
