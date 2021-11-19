@@ -40,72 +40,30 @@
             {% endfor %}
         </p>
         <p>
-            {{ benevole.francais.label }}<br>
-            {{ benevole.francais(size=32) }}<br>
-            {% for error in benevole.francais.errors %}
+            {{ benevole.maternelle.label }}<br>
+            {{ benevole.maternelle(size=32) }}<br>
+            {% for error in benevole.maternelle.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
         <p>
-            {{ benevole.anglais.label }}<br>
-            {{ benevole.anglais(size=32) }}<br>
-            {% for error in benevole.anglais.errors %}
+            {{ benevole.autonome.label }}<br>
+            {{ benevole.autonome(size=32) }}<br>
+            {% for error in benevole.autonome.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
         <p>
-            {{ benevole.espagnol.label }}<br>
-            {{ benevole.espagnol(size=32) }}<br>
-            {% for error in benevole.espagnol.errors %}
+            {{ benevole.notions.label }}<br>
+            {{ benevole.notions(size=32) }}<br>
+            {% for error in benevole.notions.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
         <p>
-            {{ benevole.allemand.label }}<br>
-            {{ benevole.allemand(size=32) }}<br>
-            {% for error in benevole.allemand.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.italien.label }}<br>
-            {{ benevole.italien(size=32) }}<br>
-            {% for error in benevole.italien.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.portugais.label }}<br>
-            {{ benevole.portugais(size=32) }}<br>
-            {% for error in benevole.portugais.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.chinois.label }}<br>
-            {{ benevole.chinois(size=32) }}<br>
-            {% for error in benevole.chinois.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.russe.label }}<br>
-            {{ benevole.russe(size=32) }}<br>
-            {% for error in benevole.russe.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.arabe.label }}<br>
-            {{ benevole.arabe(size=32) }}<br>
-            {% for error in benevole.arabe.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ benevole.autres.label }}<br>
-            {{ benevole.autres(size=32) }}<br>
-            {% for error in benevole.autres.errors %}
+            {{ benevole.lu_parlé_écrit.label }}<br>
+            {{ benevole.lu_parlé_écrit(size=32) }}<br>
+            {% for error in benevole.lu_parlé_écrit.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>

@@ -54,22 +54,20 @@ def register_benevole():
         contact = Contact()
         experience_inter_benevole = ExperienceInterBenevole()
         domaines_et_secteurs = DomainesEtSecteurs()
+
         domaines_et_secteurs.secteurs = request.form['secteurs']
         domaines_et_secteurs.domaines = request.form['domaines']
         domaines_et_secteurs.fonctions = request.form['fonctions']
+
         domaines_et_secteurs.compétences = request.form['competences']
         contact.numéro = request.form['numero']
         contact.email = request.form['email']
-        langues.francais = request.form['francais']
-        langues.anglais = request.form['anglais']
-        langues.espagnol = request.form['espagnol']
-        langues.allemand = request.form['allemand']
-        langues.italien = request.form['italien']
-        langues.portugais = request.form['portugais']
-        langues.chinois = request.form['chinois']
-        langues.russe = request.form['russe']
-        langues.arabe = request.form['arabe']
-        langues.autres = request.form['autres']
+
+        langues.maternelle = request.form['maternelle']
+        langues.autonome = request.form['autonome']
+        langues.notions = request.form['notions']
+        langues.lu_parlé_écrit = request.form['lu_parlé_écrit']
+
         experience_inter_benevole.roles = request.form['roles']
         experience_inter_benevole.expérience_internationale = request.form['expérience_internationale']
         experience_inter_benevole.expérience_internationale_benevole = request.form['expérience_internationale_benevole']
@@ -157,16 +155,12 @@ def search_text():
 
     if search_form.validate_on_submit() and request.method == 'POST':
         search = request.form['search']
-        print(search)
 
         benevoles = Benevole.objects.search_text(search).order_by('$text_score')
-        print(benevoles)
-
 
         return render_template('search_text_results.html', benevoles=benevoles, search=search)
 
     return render_template('search_test_form.html', title='Search Text', search_form=search_form)
-
 
 
 @app.route('/force_update')

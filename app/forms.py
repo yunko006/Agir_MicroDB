@@ -14,25 +14,24 @@ class BenevoleForm(FlaskForm):
     id = StringField('ID', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
+    #contact
     email = StringField('Email', validators=[DataRequired()])
     numero = StringField('Numéro de téléphone', validators=[DataRequired()])
-    francais = StringField('Niveau de Francais', validators=[DataRequired()])
-    anglais = StringField("Niveau d'Anglais", validators=[DataRequired()])
-    espagnol = StringField("Niveau d'Espagnol", validators=[DataRequired()])
-    allemand = StringField("Niveau d'Allemand", validators=[DataRequired()])
-    italien = StringField("Niveau d'Italien", validators=[DataRequired()])
-    portugais = StringField('Niveau de Portugais', validators=[DataRequired()])
-    chinois = StringField('Niveau de Chinois', validators=[DataRequired()])
-    russe = StringField('Niveau de Russe', validators=[DataRequired()])
-    arabe = StringField('Niveau de Arabe', validators=[DataRequired()])
-    autres = StringField('Autres', validators=[DataRequired()])
+    #langues
+    maternelle = StringField('Langue maternelle', validators=[DataRequired()])
+    autonome = StringField('Langues(s) avec un niveau autonome', validators=[DataRequired()])
+    notions = StringField('Langues(s) connues avec des notions', validators=[DataRequired()])
+    lu_parlé_écrit = StringField('Langue(s) lu parlé écrit', validators=[DataRequired()])
+    # secteurs et domaines
     secteurs = StringField('Secteurs', validators=[DataRequired()])
     domaines = StringField('Domaines', validators=[DataRequired()])
     fonctions = StringField('Fonctions', validators=[DataRequired()])
     competences = StringField('Compétences', validators=[DataRequired()])
+    # exp inter/bénévoles
     roles = StringField('Roles', validators=[DataRequired()])
     expérience_internationale = StringField('Expérience Internationale', validators=[DataRequired()])
     expérience_internationale_benevole = StringField('Expérience Internationale comme Bénévole', validators=[DataRequired()])
+    # submit
     submit = SubmitField('Enregistrer')
 
 

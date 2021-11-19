@@ -31,15 +31,22 @@ class Contact(db.EmbeddedDocument):
 
 
 class Langues(db.EmbeddedDocument):
-    francais = db.StringField(required=True)
-    anglais = db.StringField(required=True)
-    espagnol = db.StringField(required=True)
-    allemand = db.StringField(required=True)
-    italien = db.StringField(required=True)
-    portugais = db.StringField(required=True)
-    chinois = db.StringField(required=True)
-    russe = db.StringField(required=True)
-    arabe = db.StringField(required=True)
+    # francais = db.StringField(required=True)
+    # anglais = db.StringField(required=True)
+    # espagnol = db.StringField(required=True)
+    # allemand = db.StringField(required=True)
+    # italien = db.StringField(required=True)
+    # portugais = db.StringField(required=True)
+    # chinois = db.StringField(required=True)
+    # russe = db.StringField(required=True)
+    # arabe = db.StringField(required=True)
+    # autres = db.StringField(default=None)
+
+    maternelle = db.StringField()
+    autonome = db.StringField()
+    notions = db.StringField()
+    lu_parlé_écrit = db.StringField()
+    ne_connait_pas = db.StringField()
     autres = db.StringField(default=None)
 
 

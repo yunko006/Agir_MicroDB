@@ -7,8 +7,7 @@ def appartenance(champs: dict):
 
     DomainesEtSecteurs = ["secteurs", "domaines", "fonctions", "compétences"]
     dispo = ["missions", "projets", "duree_en_mois", "nb_deplacements_par_an"]
-    langues = ["francais", "anglais", "allemand", "espagnol",
-               "italien", "portuguais", "chinois", "russe", "arabe", "autres"]
+    langues = ["maternelle", "autonome", "notions", "lu_parlé_écrit"]
     ExperienceInterBenevole = ["roles", "expérience_internationale", "expérience_internationale_benevole"]
     for champ in champs.keys():
 
@@ -31,8 +30,7 @@ def single_appartenance(champs: str):
     inter = ["volontaire", 'hésitation']
     DomainesEtSecteurs = ["secteurs", "domaines", "fonctions", "compétences"]
     dispo = ["missions", "projets", "duree_en_mois", "nb_deplacements_par_an"]
-    langues = ["francais", "anglais", "allemand", "espagnol",
-               "italien", "portuguais", "chinois", "russe", "arabe", "autres"]
+    langues = ["maternelle", "autonome", "notions", "lu_parlé_écrit"]
     exp_international = ["roles", "experience_inter", "description_exp",
                          "experience_benevole", "connaissance_structure_inter"]
     contact = ["numéro", "email"]
