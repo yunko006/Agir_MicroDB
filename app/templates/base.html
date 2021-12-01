@@ -1,6 +1,9 @@
 <!doctype html>
 <html>
     <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
         {% if title %}
         <title> {{ title }} - MicroDB</title>
         {% else %}
@@ -12,6 +15,7 @@
             MicroDB:
             <a href="{{ url_for('index') }}">Home</a> -
             <a href="{{ url_for('login') }}">Login</a> -
+            <a href="{{ url_for('logout') }}">Logout</a> -
             <a href="{{ url_for('get_benevoles') }}">Tous les bénévoles</a> -
             <a href="{{ url_for('register_benevole') }}">Enregistrer un bénévole</a> -
             <a href="{{ url_for('recherche8') }}">Rechercher un bénévole</a> -

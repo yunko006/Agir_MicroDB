@@ -1,4 +1,5 @@
-from app import db
+from app import db, login_manager
+from flask_login import UserMixin
 
 
 class Disponibilités(db.EmbeddedDocument):
@@ -31,17 +32,6 @@ class Contact(db.EmbeddedDocument):
 
 
 class Langues(db.EmbeddedDocument):
-    # francais = db.StringField(required=True)
-    # anglais = db.StringField(required=True)
-    # espagnol = db.StringField(required=True)
-    # allemand = db.StringField(required=True)
-    # italien = db.StringField(required=True)
-    # portugais = db.StringField(required=True)
-    # chinois = db.StringField(required=True)
-    # russe = db.StringField(required=True)
-    # arabe = db.StringField(required=True)
-    # autres = db.StringField(default=None)
-
     maternelle = db.StringField()
     autonome = db.StringField()
     notions = db.StringField()
@@ -62,3 +52,36 @@ class Benevole(db.Document):
     disponibilités = db.EmbeddedDocumentField(Disponibilités)
 
     meta = {'strict': False}
+
+
+class User(UserMixin, db.Document):
+
+    meta = {'collection': 'users', 'strict': False}
+    username = db.StringField(max_length=20)
+    password = db.StringField()
+    authenticated = db.BooleanField(default=False)
+    is_active = db.BooleanField(default=True)
+
+    def get_id(self):
+        return self.username
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_anonymous(self):
+        return False
+
+
+@login_manager.user_loader
+def user_loader(username):
+    return User.objects(username=username).first()
+
+# @login_manager.request_loader
+# def request_loader(request):
+#     username = request.form.get('username')
+#     # if username not in users:
+#     #     return
+
+#     user = User()
+#     user.id = username
+#     return user
