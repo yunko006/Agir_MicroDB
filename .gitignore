@@ -119,3 +119,4 @@ app/templates/dropdown.html
 app/templates/dropdown2.html
 .DS_Store
 app/update_db.py
+app/update_db.py

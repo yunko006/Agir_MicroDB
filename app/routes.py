@@ -6,8 +6,8 @@ from app.models import *
 
 from app.utils import *
 
-from app.update_db import update_benevole_with_volontaire_fied, create_user
-# import json
+# from app.update_db import update_benevole_with_volontaire_fied, create_user
+
 
 @app.route('/index')
 def index():
@@ -24,7 +24,7 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
         ]
-        return render_template('index.html', title='Home', posts=posts, user=user)
+        return render_template('header.html', title='Home', posts=posts, user=user)
 
     return redirect(url_for('login'))
 
@@ -42,7 +42,7 @@ def login():
                 login_user(user)
                 return redirect(url_for('get_benevoles'))
 
-    return render_template('login.html', title="Sign In", form=form)
+    return render_template('login2.html', title="Sign In", form=form)
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -187,10 +187,10 @@ def search_text():
     return render_template('search_test_form.html', title='Search Text', search_form=search_form)
 
 
-@app.route('/force_update')
-def update_db_from_script():
+# @app.route('/force_update')
+# def update_db_from_script():
 
-    #xd = update_benevole_with_volontaire_fied()
-    test = create_user()
+#     #xd = update_benevole_with_volontaire_fied()
+#     test = create_user()
 
-    return test
+#     return test

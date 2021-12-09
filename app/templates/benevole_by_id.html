@@ -1,49 +1,220 @@
-{% extends "base.html" %}
+{% extends "header.html" %}
+
+{% block page_header %} Hello {% endblock page_header %}
 
 {% block content %}
-    {% for b in benevole %}
-        <h1>Bénévole : {{ b.nom }} {{ b.prenom}} </h1>
-        <h3>Numéro d'adhérent : {{ b.id}} </h3>
-        <ul> <p> Informations personnelles </p>
-            <li> Mail : {{ b.contact.email}} </li>
-            <li> Numéro : {{ b.contact.numéro}} </li>
-        </ul>
 
-        <ul>
-            <p> Volontaire </p>
-            {% if b.volontaire.inter %}
-            <li> Oui </li>
-            {% else %}
-            <li> Oui, depuis la France uniquement </li>
-            {% endif %}
-        </ul>
+  {% for b in benevole %}
+  <div class="card shadow p-3 mb-5 bg-white rounded">
+    <div class="card-header text-center">
+        Informations du bénévole
+    </div>
+    <!-- Infos générales -->
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Numéro d'adhérent
+                    </div>
+                    <div class="col-8">
+                        {{ b.id}}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Nom
+                    </div>
+                    <div class="col-8">
+                        {{ b.nom }} {{ b.prenom}}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Adresse Mail
+                    </div>
+                    <div class="col-8">
+                        {{ b.contact.email}}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Numéro de téléphone
+                    </div>
+                    <div class="col-8">
+                        {{ b.contact.numéro}}
+                    </div>
+            </div>
+        </li>
+        <!-- Volontaire -->
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Volontaire
+                    </div>
+                    <div class="col-8">
+                        {% if b.volontaire.inter %}
+                            A l'internationnal
+                        {% else %}
+                            Depuis la France uniquement
+                        {% endif %}
+                    </div>
+            </div>
+        </li>
+        <!-- Disponibilités -->
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Type de mission/projet
+                    </div>
+                    <div class="col-8">
+                        {{ b.disponibilités.mission_ou_projet }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Durée du déplacement
+                    </div>
+                    <div class="col-8">
+                        {{ b.disponibilités.durée }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Nombre de déplacements
+                    </div>
+                    <div class="col-8">
+                        {{ b.disponibilités.nb_déplacements }}
+                    </div>
+            </div>
+        </li>
+        <!-- Langues -->
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Langue maternelle
+                    </div>
+                    <div class="col-8">
+                        {{b.langues.maternelle }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Autonome en
+                    </div>
+                    <div class="col-8">
+                        {{b.langues.autonome }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Notions de
+                    </div>
+                    <div class="col-8">
+                        {{b.langues.notions }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Langues Lu Parlé Ecrit
+                    </div>
+                    <div class="col-8">
+                        {{b.langues.lu_parlé_écrit }}
+                    </div>
+            </div>
+        </li>
+        <!-- Domaines et secteurs -->
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Secteurs
+                    </div>
+                    <div class="col-8">
+                        {{ b.DomainesEtSecteurs.secteurs }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Domaines
+                    </div>
+                    <div class="col-8">
+                        {{ b.DomainesEtSecteurs.domaines }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Compétences
+                    </div>
+                    <div class="col-8">
+                        {{ b.DomainesEtSecteurs.compétences }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Fonctions
+                    </div>
+                    <div class="col-8">
+                        {{ b.DomainesEtSecteurs.fonctions }}
+                    </div>
+            </div>
+        </li>
 
-        <ul> <p>Disponibilités </p>
-            <li>Type de mission/projet : {{ b.disponibilités.mission_ou_projet }}</li>
-            <li>Durée du déplacement : {{ b.disponibilités.durée }}</li>
-            <li>Nombre de déplacements : {{ b.disponibilités.nb_déplacements }}</li>
-        </ul>
+        <!-- Expérience du bénévole -->
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Rôles
+                    </div>
+                    <div class="col-8">
+                        {{ b.ExperienceInterBenevole.roles }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Expérience internationnale
+                    </div>
+                    <div class="col-8">
+                        {{ b.ExperienceInterBenevole.expérience_internationale }}
+                    </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                    <div class="col-4">
+                        Expérience internationnale comme bénévole
+                    </div>
+                    <div class="col-8">
+                        {{ b.ExperienceInterBenevole.expérience_internationale_benevole }}
+                    </div>
+            </div>
+        </li>
 
-        <ul> <p>Domaines et Secteurs d'expertise</p>
-            <li> Secteurs : {{ b.DomainesEtSecteurs.secteurs }}</li>
-            <li> Domaines : {{ b.DomainesEtSecteurs.domaines }}</li>
-            <li> Compétences : {{ b.DomainesEtSecteurs.compétences }}</li>
-            <li> Fonctions : {{ b.DomainesEtSecteurs.fonctions }}</li>
-        </ul>
+    </ul>
 
-        <ul> <p>Expérience Internationnale </p>
-            <li> Rôles : {{ b.ExperienceInterBenevole.roles }}</li>
-            <li> Expérience internationnale : {{ b.ExperienceInterBenevole.expérience_internationale }}</li>
-            <li> Expérience internationnale comme bénévole : {{ b.ExperienceInterBenevole.expérience_internationale_benevole }}</li>
-        </ul>
-
-        <ul> <p> Niveau de langue </p>
-            <li>Langue maternelle : {{b.langues.maternelle }} </li>
-            <li>Autonome en : {{b.langues.autonome }} </li>
-            <li>Notions de : {{b.langues.notions }} </li>
-            <li>Langues Lu Parlé Ecrit : {{b.langues.lu_parlé_écrit }} </li>
-            <li>Langues non connues : {{b.langues.ne_connait_pas }} </li>
-        </ul>
-    {% endfor %}
+  </div>
+  {% endfor %}
 
 {% endblock %}
