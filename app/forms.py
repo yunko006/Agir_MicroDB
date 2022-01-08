@@ -58,4 +58,4 @@ class ChampsForm(FlaskForm):
 
 class SearchTextForm(FlaskForm):
     search = StringField('Recherche', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Rechercher')
