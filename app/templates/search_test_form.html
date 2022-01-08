@@ -1,18 +1,65 @@
-{% extends "base.html" %}
+{% extends "header.html" %}
+
+{% block page_header %}
+
+<h1>Effectuez une recherche dans la base de donnée </h1>
+{% endblock page_header %}
 
 {% block content %}
-    <h1>Effectuez une recherche dans la base de donnée </h1>
-    <form action="" method="post" novalidate>
+
+    <form class="px-4 pt-5 my-5 d-flex justify-content-center" action="/search_text" method="post" novalidate>
         {{ search_form.hidden_tag() }}
-
-        <p>
-            {{ search_form.search.label }}<br>
-            {{ search_form.search(size=32) }}<br>
-            {% for error in search_form.search.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-
-        <p>{{ search_form.submit() }}</p>
+        <div class="row">
+            <div class="col-8">
+                <p>
+                    {{ search_form.search(size=50) }}<br>
+                    {% for error in search_form.search.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                <p>
+            </div>
+            <div class="col-4">
+                <p>
+                    {{ search_form.submit() }}
+                </p>
+            </div>
+        </div>
     </form>
+
+    <hr>
+
+    <p class="d-flex justify-content-center">
+      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Voir tous les bénévoles
+      </button>
+    </p>
+
+    <div class="collapse" id="collapseExample">
+
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Numéro d'Adhérent</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for benevole in benevoles %}
+                        <tr>
+                            <th scope="row"> {{ benevole.id}} </th>
+                            <td>{{ benevole.nom }}</td>
+                            <td>{{ benevole.prenom }}</td>
+                            <td>{{ benevole.contact.email }}</td>
+                            <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 {% endblock %}
