@@ -1,188 +1,212 @@
-{% extends 'base.html' %}
+{% extends 'header.html' %}
+
+{% block page_header %}
+<h2 class="mb-2">Effectuez une recherche par combinaison dans la base de données</h2>
+{% endblock page_header %}
 
 {% block content %}
 
 
 <div class="all">
   <form class="formi" id="my-form" action="{{ url_for('recherche8') }}" method="post">
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="maternelle">Langue maternelle</option>
-        <option value="autonome">Niveau autonome</option>
-        <option value="notions">Notions en</option>
-        <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" name="recherche" />
-      <select name="champs">
-        <option value="francais">Francais</option>
-        <option value="anglais">Anglais</option>
-        <option value="espagnol">Espagnol</option>
-        <option value="allemand">Allemand</option>
-        <option value="italien">Italien</option>
-        <option value="portugais">Portugais</option>
-        <option value="chinois">Chinois</option>
-        <option value="russe">Russe</option>
-        <option value="arabe">Arabe</option>
-        <option value="autres">Autres Langues</option>
-        <option value="secteurs">Secteurs</option>
-        <option value="domaines">Domaines</option>
-        <option value="fonctions">Fonctions</option>
-        <option value="compétences">Compétences</option>
-        <option value="roles">Roles</option>
-        <option value="expérience_internationale">Expérience Inter</option>
-        <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
-      </select>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
       </div>
-      <input type="checkbox" id="inter" name="Inter"
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-8">
+        <input type="text" class="form-control" name="recherche" />
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <select class="form-select" name="champs">
+            <option value="maternelle">Langue maternelle</option>
+            <option value="autonome">Niveau autonome</option>
+            <option value="notions">Notions en</option>
+            <option value="lu_parlé_écrit">Langue lu parlée écrite</option>
+            <option value="secteurs">Secteurs</option>
+            <option value="domaines">Domaines</option>
+            <option value="fonctions">Fonctions</option>
+            <option value="compétences">Compétences</option>
+            <option value="roles">Roles</option>
+            <option value="expérience_internationale">Expérience Inter</option>
+            <option value="expérience_internationale_benevole">Expérince Inter Bénévole</option>
+          </select>
+        </div>
+      </div>
+    </div>
+      <!-- pas radio mais marche -->
+      <input class="form-check-input" type="checkbox" id="inter" name="Inter"
          checked>
       <label for="inter">Inter</label>
 
-      <input type="checkbox" id="france" name="France">
+      <input class="form-check-input" type="checkbox" id="france" name="France">
       <label for="france">France uniquement</label>
+
+      <!-- Copier bootstrap -->
+      <!-- <div class="form-check">
+        <input class="form-check-input" type="radio" name="inter" id="inter" checked>
+        <label class="form-check-label" for="inter">
+          Inter
+        </label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="france" id="france">
+        <label class="form-check-label" for="france">
+          France uniquement
+        </label>
+      </div> -->
   </form>
-  <button type="submit" form="my-form">ok</button>
+  <button class="btn btn-primary" type="submit" form="my-form">Rechercher</button>
 </div>
 
 

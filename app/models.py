@@ -71,6 +71,10 @@ class User(UserMixin, db.Document):
     def is_anonymous(self):
         return False
 
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
 
 @login_manager.user_loader
 def user_loader(username):
