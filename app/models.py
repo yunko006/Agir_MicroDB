@@ -44,6 +44,8 @@ class Benevole(db.Document):
     id = db.IntField(primary_key=True)
     nom = db.StringField()
     prenom = db.StringField()
+    # delegation
+    delegation = db.StringField()
     contact = db.EmbeddedDocumentField(Contact)
     langues = db.EmbeddedDocumentField(Langues)
     DomainesEtSecteurs = db.EmbeddedDocumentField(DomainesEtSecteurs)
