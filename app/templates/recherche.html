@@ -1,17 +1,51 @@
-{% extends 'base.html' %}
+{% extends 'header.html' %}
+
+{% block page_header %}
+
+
+  <!-- Jumbotron -->
+    <div id="intro" class="pt-5 my-5 p-5 text-center bg-light">
+      <h3>Résultat de votre recherche</h3>
+      <a class="btn btn-primary" href="{{ url_for('recherche8') }}">Faire une nouvelle recherche</a>
+    </div>
+  <!-- Jumbotron -->
+
+{% endblock page_header %}
 
 {% block content %}
-<h2>Votre recherche: {{recherche}} a produit les résultats suivant: </h2>
+
     {% for k, benevole in benevoles.items() %}
-    <ul> {{ k }} </ul>
-        {% for b in benevole %}
-            {% if b is not string %}
-            <li> <a href="{{ url_for('benevole', id=b.id) }}"> {{ b.nom }} </a></li>
-            {% else %}
-            <li> Pas dé bénévoles associés à la recherche </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    <h4>Résultat de la combinaison : {{ k }} </h4>
+
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Numéro d'Adhérent</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in benevole %}
+                            {% if b is not string %}
+                                <tr>
+                                    <th scope="row"> {{ b.id}} </th>
+                                    <td>{{ b.nom }}</td>
+                                    <td>{{ b.prenom }}</td>
+                                    <td>{{ b.contact.email }}</td>
+                                    <td> <a href="{{ url_for('benevole', id=b.id) }}">Voir sa fiche</a> </td>
+                                </tr>
+                                {% else %}
+                                    <li> Pas dé bénévoles associés à la recherche </li>
+                                {% endif %}
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <hr>
     {% endfor %}
 
 {% endblock %}

@@ -1,18 +1,14 @@
 {% extends "header.html" %}
 
 
-{% block page_header %}
-
-TITRE
-
-{% endblock page_header %}
+{% block page_header %} {% endblock page_header %}
 
 {% block content %}
 
   {% for b in benevole %}
   <div class="card shadow p-3 mb-5 bg-white rounded">
     <div class="card-header text-center">
-        Informations du bénévole
+        Informations personnelles
     </div>
     <!-- Infos générales -->
     <ul class="list-group list-group-flush">
@@ -57,6 +53,9 @@ TITRE
             </div>
         </li>
         <!-- Volontaire -->
+        <div class="card-header text-center">
+            Type de volontariat
+        </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-4">
@@ -71,6 +70,9 @@ TITRE
                     </div>
             </div>
         </li>
+        <div class="card-header text-center">
+            Disponibilités
+        </div>
         <!-- Disponibilités -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
@@ -102,6 +104,9 @@ TITRE
                     </div>
             </div>
         </li>
+        <div class="card-header text-center">
+            Langues
+        </div>
         <!-- Langues -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
@@ -143,6 +148,9 @@ TITRE
                     </div>
             </div>
         </li>
+        <div class="card-header text-center">
+            Domaines et secteurs d'intervention
+        </div>
         <!-- Domaines et secteurs -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
@@ -186,6 +194,9 @@ TITRE
         </li>
 
         <!-- Expérience du bénévole -->
+        <div class="card-header text-center">
+            Expériences
+        </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-4">

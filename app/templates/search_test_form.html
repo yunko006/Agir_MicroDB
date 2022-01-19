@@ -2,7 +2,7 @@
 
 {% block page_header %}
 
-<h2>Effectuez une recherche dans la base de données </h2>
+<h2 class="d-flex justify-content-center">Recherche textuelle</h2>
 {% endblock page_header %}
 
 {% block content %}
@@ -10,15 +10,15 @@
     <form class="px-4 pt-5 my-5 d-flex justify-content-center" action="/search_text" method="post" novalidate>
         {{ search_form.hidden_tag() }}
         <div class="row">
-            <div class="col-8">
+            <div class="col">
                 <p>
-                    {{ search_form.search(size=50) }}<br>
+                    {{ search_form.search(size=55) }}<br>
                     {% for error in search_form.search.errors %}
                     <span style="color: red;">{{ error }}</span>
                     {% endfor %}
                 <p>
             </div>
-            <div class="col-4">
+            <div class="col">
                 <p>
                     {{ search_form.submit() }}
                 </p>

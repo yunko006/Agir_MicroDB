@@ -1,7 +1,11 @@
-{% extends "base.html" %}
+{% extends "header.html" %}
+
+{% block page_header %}
+    <h2 class="d-flex justify-content-center mb-4">Mettre à jour un bénévole</h2>
+{% endblock page_header %}
 
 {% block content %}
-    <h1>Update un bénévole: </h1>
+<div class="d-flex justify-content-center">
     <form action="" method="post" novalidate>
         {{ update.hidden_tag() }}
         <p>
@@ -27,4 +31,5 @@
         </p>
         <p>{{ update.submit() }}</p>
     </form>
+</div>
 {% endblock %}

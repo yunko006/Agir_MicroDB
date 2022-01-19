@@ -1,121 +1,127 @@
-{% extends "base.html" %}
+{% extends "header.html" %}
+
+{% block page_header %}
+    <h2 class="d-flex justify-content-center mb-2">Ajouter un bénévole</h2>
+{% endblock page_header %}
+
 
 {% block content %}
-    <h1>Enregistrer un bénévole: </h1>
-    <form action="" method="post" novalidate>
+<div class="d-flex justify-content-center">
+    <form  action="" method="post" novalidate>
         {{ benevole.hidden_tag() }}
-        <p>
+        <p class="text-center">
             {{ benevole.id.label}}<br>
-            {{ benevole.id(size=32)}}<br>
+            {{ benevole.id(size=50)}}<br>
             {% for error in benevole.id.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.nom.label}}<br>
-            {{ benevole.nom(size=32)}}<br>
+            {{ benevole.nom(size=50)}}<br>
             {% for error in benevole.nom.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.prenom.label }}<br>
-            {{ benevole.prenom(size=32) }}<br>
+            {{ benevole.prenom(size=50) }}<br>
             {% for error in benevole.prenom.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.email.label }}<br>
-            {{ benevole.email(size=32) }}<br>
+            {{ benevole.email(size=50) }}<br>
             {% for error in benevole.email.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.numero.label }}<br>
-            {{ benevole.numero(size=32) }}<br>
+            {{ benevole.numero(size=50) }}<br>
             {% for error in benevole.numero.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.maternelle.label }}<br>
-            {{ benevole.maternelle(size=32) }}<br>
+            {{ benevole.maternelle(size=50) }}<br>
             {% for error in benevole.maternelle.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.autonome.label }}<br>
-            {{ benevole.autonome(size=32) }}<br>
+            {{ benevole.autonome(size=50) }}<br>
             {% for error in benevole.autonome.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.notions.label }}<br>
-            {{ benevole.notions(size=32) }}<br>
+            {{ benevole.notions(size=50) }}<br>
             {% for error in benevole.notions.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.lu_parlé_écrit.label }}<br>
-            {{ benevole.lu_parlé_écrit(size=32) }}<br>
+            {{ benevole.lu_parlé_écrit(size=50) }}<br>
             {% for error in benevole.lu_parlé_écrit.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.secteurs.label }}<br>
-            {{ benevole.secteurs(size=32) }}<br>
+            {{ benevole.secteurs(size=50) }}<br>
             {% for error in benevole.secteurs.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.domaines.label }}<br>
-            {{ benevole.domaines(size=32) }}<br>
+            {{ benevole.domaines(size=50) }}<br>
             {% for error in benevole.domaines.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.fonctions.label }}<br>
-            {{ benevole.fonctions(size=32) }}<br>
+            {{ benevole.fonctions(size=50) }}<br>
             {% for error in benevole.fonctions.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.competences.label }}<br>
-            {{ benevole.competences(size=32) }}<br>
+            {{ benevole.competences(size=50) }}<br>
             {% for error in benevole.competences.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.roles.label }}<br>
-            {{ benevole.roles(size=32) }}<br>
+            {{ benevole.roles(size=50) }}<br>
             {% for error in benevole.roles.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.expérience_internationale.label }}<br>
-            {{ benevole.expérience_internationale(size=32) }}<br>
+            {{ benevole.expérience_internationale(size=50) }}<br>
             {% for error in benevole.expérience_internationale.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-center">
             {{ benevole.expérience_internationale_benevole.label }}<br>
-            {{ benevole.expérience_internationale_benevole(size=32) }}<br>
+            {{ benevole.expérience_internationale_benevole(size=50) }}<br>
             {% for error in benevole.expérience_internationale_benevole.errors %}
             <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </p>
         <p>{{ benevole.submit() }}</p>
     </form>
+</div>
 {% endblock %}
