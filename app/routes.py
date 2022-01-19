@@ -9,25 +9,14 @@ from app.utils import *
 # from app.update_db import update_benevole_with_volontaire_fied, create_user
 
 
-@app.route('/index')
+@app.route('/')
+@app.route('/accueil')
 def index():
     if current_user.is_authenticated:
 
-        user = current_user.username
-        posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-        ]
-        return render_template('header.html', title='Home', posts=posts, user=user)
+        return render_template('accueil.html', title='Home')
 
     return redirect(url_for('login'))
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -40,9 +29,10 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 user.authenticated = True
                 login_user(user)
-                return redirect(url_for('get_benevoles'))
+                return redirect(url_for('index'))
 
-    return render_template('login2.html', title="Sign In", form=form)
+    return render_template('login.html', title="Sign In", form=form)
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -51,13 +41,11 @@ def logout():
 
 
 @login_required
-@app.route('/')
 @app.route('/benevoles')
 def get_benevoles():
     if current_user.is_authenticated:
         benevoles = Benevole.objects()
         name = current_user.username
-
         return render_template('benevoles.html', title='Benevoles', benevoles=benevoles, name=name)
     else:
         return redirect(url_for('login'))
@@ -88,8 +76,10 @@ def register_benevole():
         langues.lu_parlé_écrit = request.form['lu_parlé_écrit']
 
         experience_inter_benevole.roles = request.form['roles']
-        experience_inter_benevole.expérience_internationale = request.form['expérience_internationale']
-        experience_inter_benevole.expérience_internationale_benevole = request.form['expérience_internationale_benevole']
+        experience_inter_benevole.expérience_internationale = request.form[
+            'expérience_internationale']
+        experience_inter_benevole.expérience_internationale_benevole = request.form[
+            'expérience_internationale_benevole']
         new_benevole.id = int(request.form['id'])
         new_benevole.nom = request.form['nom']
         new_benevole.prenom = request.form['prenom']
@@ -137,9 +127,10 @@ def help():
 def recherche8():
     if request.method == 'POST':
         recherche_list = request.form.getlist('recherche')
-        champs_list= request.form.getlist('champs')
+        champs_list = request.form.getlist('champs')
 
         check_inter = request.form.get('Inter')
+        print(check_inter)
         check_france = request.form.get('France')
 
         if request.form.get('Inter'):
@@ -147,13 +138,14 @@ def recherche8():
 
             final_query = convertion(recherche_list, champs_list)
             #final_query = test_convertion_plus_simple(recherche_list, champs_list)
-            #print(final_query)
+            # print(final_query)
             benevoles = queryset_by_element(final_query, queryset_benevoles)
 
             return render_template('recherche.html', title='Recherche', benevoles=benevoles)
 
         if request.form.get('France'):
-            queryset_benevoles = Benevole.objects(volontaire__france_uniquement=True)
+            queryset_benevoles = Benevole.objects(
+                volontaire__france_uniquement=True)
 
             final_query = convertion(recherche_list, champs_list)
             benevoles = queryset_by_element(final_query, queryset_benevoles)
@@ -175,16 +167,19 @@ def benevole(id):
 @login_required
 @app.route('/search_text', methods=['GET', 'POST'])
 def search_text():
+    benevoles = Benevole.objects()
     search_form = SearchTextForm()
 
-    if search_form.validate_on_submit() and request.method == 'POST':
+    if search_form.validate_on_submit():
+        # if request.method == 'POST':
         search = request.form['search']
 
-        benevoles = Benevole.objects.search_text(search).order_by('$text_score')
+        benevoles = Benevole.objects.search_text(
+            search).order_by('$text_score')
 
-        return render_template('search_text_results.html', benevoles=benevoles, search=search)
+        return render_template('search_text_results.html', benevoles=benevoles, search=search, search_form=search_form)
 
-    return render_template('search_test_form.html', title='Search Text', search_form=search_form)
+    return render_template('search_test_form.html', title='Search Text', search_form=search_form, benevoles=benevoles)
 
 
 # @app.route('/force_update')
