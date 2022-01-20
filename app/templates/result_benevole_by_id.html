@@ -1,22 +1,5 @@
 {% extends "header.html" %}
 
-{% block page_header %}
-<div class="container">
-    <div class="row">
-        <div class="col-8">
-            <h2 class="text-center">Tous les intervenants</h2>
-        </div>
-        <div class="col-4">
-            <form class="formi" id="form-search-id" action="{{ url_for('search_benevole_by_id') }}" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Rechercher un bénévole par son id" name="id" aria-label="Recipient's username" aria-describedby="button-addon2" action="{{ url_for('recherche8') }}" method="post">
-                    <button class="btn btn-outline-secondary" type="submit" form="form-search-id" id="button-addon2">Rechercher</button>
-                </div>
-        </div>
-    </div>
-</div>
-{% endblock page_header %}
-
 {% block content %}
 
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">

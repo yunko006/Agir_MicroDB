@@ -45,8 +45,9 @@ def logout():
 def get_benevoles():
     if current_user.is_authenticated:
         benevoles = Benevole.objects()
-        name = current_user.username
-        return render_template('benevoles.html', title='Benevoles', benevoles=benevoles, name=name)
+
+        return render_template('benevoles.html', title='Benevoles', benevoles=benevoles)
+
     else:
         return redirect(url_for('login'))
 
@@ -164,6 +165,16 @@ def benevole(id):
     return render_template('benevole_by_id.html', benevole=benevole)
 
 
+@app.route('/result_benevole_by_id', methods=['GET', 'POST'])
+def search_benevole_by_id():
+    if request.method == 'POST':
+        benevole_id = request.form.get('id')
+        print(benevole_id)
+        benevoles = Benevole.objects(id=benevole_id)
+
+        return render_template('result_benevole_by_id.html', benevoles=benevoles)
+
+
 @login_required
 @app.route('/search_text', methods=['GET', 'POST'])
 def search_text():
@@ -177,6 +188,16 @@ def search_text():
         benevoles = Benevole.objects.search_text(
             search).order_by('$text_score')
 
+        print(type(benevoles))
+
+        # #prendre le queryset benevole et faire la recherche 8 donc meme logique
+        # search text's queryset
+        # query_benevole = Benevole.objects.search_text(search)
+        # #Convertir les données de la form en donnée utilisable :
+        # final_query = convertion(recherche_list, champs_list)
+        # # recherche final dans le nouveau query set
+        # benevoles = queryset_by_element(final_query, query_benevoles)
+
         return render_template('search_text_results.html', benevoles=benevoles, search=search, search_form=search_form)
 
     return render_template('search_test_form.html', title='Search Text', search_form=search_form, benevoles=benevoles)
@@ -185,7 +206,7 @@ def search_text():
 # @app.route('/force_update')
 # def update_db_from_script():
 
-#     #xd = update_benevole_with_volontaire_fied()
-#     test = create_user()
+#     xd = update_benevole_with_volontaire_fied()
+#     #     test = create_user()
 
-#     return test
+#     return xd
