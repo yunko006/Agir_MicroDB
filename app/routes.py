@@ -1,22 +1,36 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from app import app, bcrypt
-from flask_login import login_user, logout_user, current_user, login_required
-from app.forms import LoginForm, BenevoleForm, UpdateBenevoleForm, QueryForm, ChampsForm, SearchTextForm
+from flask_login import login_user, current_user, logout_user, login_required
+from app.forms import LoginForm, BenevoleForm, SearchTextForm
 from app.models import *
+from app.role_required import *
 
 from app.utils import *
 
-# from app.update_db import update_benevole_with_volontaire_fied, create_user
+from app.update_db import update_benevole_with_volontaire_fied, create_user
+
+ROWS_PER_PAGE = 10
+
+login_manager.login_view = "login"
+
+
+@login_manager.user_loader
+def user_loader(username):
+    return User.objects(username=username).first()
+
+
+# redirect to login is user is not authenticated
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect(url_for('login'))
 
 
 @app.route('/')
 @app.route('/accueil')
+@login_required
 def index():
-    if current_user.is_authenticated:
 
-        return render_template('accueil.html', title='Home')
-
-    return redirect(url_for('login'))
+    return render_template('accueil.html', title='Home')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -29,31 +43,49 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 user.authenticated = True
                 login_user(user)
+
+                next = request.args.get('next')
+                if not is_safe_url(next):
+                    return flask.abort(400)
+
                 return redirect(url_for('index'))
 
-    return render_template('login.html', title="Sign In", form=form)
+    return render_template('login2.html', title="Sign In", form=form)
 
 
-@app.route('/logout', methods=['GET'])
+@app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
+@app.route('/delegation')
 @login_required
+def accordeon_delegation():
+    # get all distinct delegation to loop throught
+    delegation = Benevole.objects.distinct('delegation')
+    benevoles = Benevole.objects()
+    return render_template('accordeon_delegation.html', title='delegation', delegation=delegation, benevoles=benevoles)
+
+
+# plus utilisé pour le moment
 @app.route('/benevoles')
-def get_benevoles():
-    if current_user.is_authenticated:
-        benevoles = Benevole.objects()
-
-        return render_template('benevoles.html', title='Benevoles', benevoles=benevoles)
-
-    else:
-        return redirect(url_for('login'))
-
-
 @login_required
+def get_benevoles():
+    # Set the pagination configuration
+    page = request.args.get('page', 1, type=int)
+
+    # all_benevoles = Benevole.objects()
+    # colors = Color.query.paginate(page=page, per_page=ROWS_PER_PAGE)
+    all_benevoles = Benevole.objects.paginate(
+        page=page, per_page=ROWS_PER_PAGE)
+
+    return render_template('benevoles.html', title='Benevoles', all_benevoles=all_benevoles)
+
+
 @app.route('/register_benevole', methods=['GET', 'POST'])
+@AI_required
 def register_benevole():
     benevole = BenevoleForm()
     if benevole.validate_on_submit():
@@ -97,116 +129,146 @@ def register_benevole():
     return render_template('register_benevole.html', title='register_benevole', benevole=benevole)
 
 
+@app.route('/update_benevole/<int:id>/<champs>', methods=['GET', 'POST'])
 @login_required
-@app.route('/update_benevole', methods=['GET', 'POST'])
-def update_benevole():
-    update = UpdateBenevoleForm()
-    if update.validate_on_submit():
-        field = request.form['field']
-        value = request.form['value']
-        benevole_id = int(request.form['id'])
-        field_appartenance = single_appartenance(field)
-        update_dict = {
-            f'set__{field_appartenance}__{field}': f'{value}'
-        }
-        Benevole.objects(id=benevole_id).update_one(
-            **update_dict)
-        flash(
-            f"{Benevole.objects(id=benevole_id)} a bien été mise à jour!")
-        return redirect(url_for('get_benevoles'))
+def update_benevole(id, champs):
 
-    return render_template('update_benevole.html', title='Update_bénévole', update=update)
+    if request.method == 'POST':
+        value = request.form.get('value')
+        modal_update_benevole(id, champs, value)
+        flash(f"La fiche a bien été mise à jour!")
+        return redirect(url_for('benevole', id=id))
 
 
 @app.route('/help')
+@login_required
 def help():
     return render_template('help.html', title='Aide/FAQ')
 
 
-@login_required
 @app.route('/recherche8', methods=['GET', 'POST'])
+@AI_required
 def recherche8():
     if request.method == 'POST':
         recherche_list = request.form.getlist('recherche')
         champs_list = request.form.getlist('champs')
 
-        check_inter = request.form.get('Inter')
-        print(check_inter)
-        check_france = request.form.get('France')
-
         if request.form.get('Inter'):
             queryset_benevoles = Benevole.objects(volontaire__inter=True)
 
             final_query = convertion(recherche_list, champs_list)
-            #final_query = test_convertion_plus_simple(recherche_list, champs_list)
+            # final_query = test_convertion_plus_simple(recherche_list, champs_list)
             # print(final_query)
-            benevoles = queryset_by_element(final_query, queryset_benevoles)
+            benevoles_query = queryset_by_element(
+                final_query, queryset_benevoles)
 
-            return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+            return render_template('recherche.html', title='Recherche', benevoles_query=benevoles_query)
 
         if request.form.get('France'):
             queryset_benevoles = Benevole.objects(
                 volontaire__france_uniquement=True)
 
             final_query = convertion(recherche_list, champs_list)
-            benevoles = queryset_by_element(final_query, queryset_benevoles)
+            benevoles_query = queryset_by_element(
+                final_query, queryset_benevoles)
 
-            return render_template('recherche.html', title='Recherche', benevoles=benevoles)
+            return render_template('recherche.html', title='Recherche', benevoles_query=benevoles_query)
 
     else:
         return render_template('query8.html', title='Huit')
 
 
-@login_required
 @app.route('/bénévole/<id>')
+@login_required
 def benevole(id):
-    benevole = Benevole.objects(id=id)
+    benevole_par_id = Benevole.objects(id=id)
 
-    return render_template('benevole_by_id.html', benevole=benevole)
+    return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id)
 
 
 @app.route('/result_benevole_by_id', methods=['GET', 'POST'])
+@login_required
 def search_benevole_by_id():
     if request.method == 'POST':
-        benevole_id = request.form.get('id')
-        print(benevole_id)
-        benevoles = Benevole.objects(id=benevole_id)
 
-        return render_template('result_benevole_by_id.html', benevoles=benevoles)
+        try:
+            benevole_input = int(request.form.get('id'))
+            benevoles_id_ou_nom = Benevole.objects(id=benevole_input)
+
+        except ValueError:
+            benevole_input = request.form.get('id')
+            benevoles_id_ou_nom = Benevole.objects(nom=benevole_input.title())
+
+    return render_template('result_benevole_by_id.html', benevoles_id_ou_nom=benevoles_id_ou_nom)
 
 
-@login_required
 @app.route('/search_text', methods=['GET', 'POST'])
+@AI_required
 def search_text():
     benevoles = Benevole.objects()
     search_form = SearchTextForm()
 
     if search_form.validate_on_submit():
-        # if request.method == 'POST':
         search = request.form['search']
 
-        benevoles = Benevole.objects.search_text(
+        benevoles_trouver_par_text = Benevole.objects.search_text(
             search).order_by('$text_score')
 
-        print(type(benevoles))
+        # set la variable a la session pour pouvoir y aceder dans une autre route.
+        session["benevoles_a_combiner"] = benevoles_trouver_par_text
 
-        # #prendre le queryset benevole et faire la recherche 8 donc meme logique
-        # search text's queryset
-        # query_benevole = Benevole.objects.search_text(search)
-        # #Convertir les données de la form en donnée utilisable :
-        # final_query = convertion(recherche_list, champs_list)
-        # # recherche final dans le nouveau query set
-        # benevoles = queryset_by_element(final_query, query_benevoles)
-
-        return render_template('search_text_results.html', benevoles=benevoles, search=search, search_form=search_form)
+        return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search, search_form=search_form)
 
     return render_template('search_test_form.html', title='Search Text', search_form=search_form, benevoles=benevoles)
 
 
+@app.route('/text_result_combinaison', methods=['GET', 'POST'])
+@AI_required
+def text_result_combinaison():
+    base_queryset = session.get('benevoles_a_combiner')
+
+    if request.method == 'POST':
+        recherche_list = request.form.getlist('recherche')
+        champs_list = request.form.getlist('champs')
+
+        if request.form.get('Inter'):
+            sub_queryset_benevoles = base_queryset.filter(
+                volontaire__inter=True)
+
+            final_query = convertion(recherche_list, champs_list)
+
+            benevoles_query = queryset_by_element(
+                final_query, sub_queryset_benevoles)
+
+            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
+
+        if request.form.get('France'):
+            sub_queryset_benevoles = base_queryset.filter(
+                volontaire__france_uniquement=True)
+
+            final_query = convertion(recherche_list, champs_list)
+
+            benevoles_query = queryset_by_element(
+                final_query, queryset_benevoles)
+
+            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
+
+    else:
+        return render_template('combinaison_text.html', title='Huit')
+
+
+@app.route('/not-ROLE/')
+@login_required
+def not_ROLE():
+    return render_template('unauthorized.html', title='Pas autorisé')
+
+
+# not safe to use !
 # @app.route('/force_update')
+# @admin_required
 # def update_db_from_script():
 
-#     xd = update_benevole_with_volontaire_fied()
-#     #     test = create_user()
+#     # xd = update_benevole_with_volontaire_fied()
+#     test = create_user()
 
-#     return xd
+#     return test
