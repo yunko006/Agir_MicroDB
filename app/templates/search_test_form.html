@@ -1,4 +1,5 @@
-{% extends "header.html" %}
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
 {% block page_header %}
 
@@ -7,59 +8,20 @@
 
 {% block content %}
 
-    <form class="px-4 pt-5 my-5 d-flex justify-content-center" action="/search_text" method="post" novalidate>
-        {{ search_form.hidden_tag() }}
-        <div class="row">
-            <div class="col">
-                <p>
-                    {{ search_form.search(size=55) }}<br>
-                    {% for error in search_form.search.errors %}
-                    <span style="color: red;">{{ error }}</span>
-                    {% endfor %}
-                <p>
+<form class="d-flex justify-content-center" action="/search_text" method="post" novalidate>
+    {{ search_form.hidden_tag() }}
+        <div class="container">
+            <div class="row justify-content-center mb-2">
+                <div class="col-8">
+                    {{ render_field(search_form.search, form_type="inline", class="form-control") }}
+                </div>
             </div>
-            <div class="col">
-                <p>
-                    {{ search_form.submit() }}
-                </p>
+            <div class="row text-center">
+                <div class="col">
+                    {{ render_field(search_form.submit) }}
+                </div>
             </div>
         </div>
-    </form>
-
-    <hr>
-
-    <p class="d-flex justify-content-center">
-      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Voir tous les bénévoles
-      </button>
-    </p>
-
-    <div class="collapse" id="collapseExample">
-
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <table class="table table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Numéro d'Adhérent</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Email</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for benevole in benevoles %}
-                        <tr>
-                            <th scope="row"> {{ benevole.id}} </th>
-                            <td>{{ benevole.nom }}</td>
-                            <td>{{ benevole.prenom }}</td>
-                            <td>{{ benevole.contact.email }}</td>
-                            <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+</form>
 
 {% endblock %}

@@ -6,7 +6,7 @@
   <!-- Jumbotron -->
     <div id="intro" class="pt-5 my-5 p-5 text-center bg-light">
       <h3>Résultat de votre recherche</h3>
-      <a class="btn btn-primary" href="{{ url_for('recherche8') }}">Faire une nouvelle recherche</a>
+      <a class="btn btn-primary" href="{{ url_for('text_result_combinaison') }}">Faire une nouvelle recherche</a>
     </div>
   <!-- Jumbotron -->
 
@@ -31,7 +31,7 @@
                         {% for b in benevole %}
                             {% if b is not string %}
                                 <tr style="transform: rotate(0);">
-                                <th scope="row"><a href="{{ url_for('benevole', id=b.id) }}" class="stretched-link text-decoration-none text-dark">{{ b.id}}</a></th>
+                            <th scope="row"><a href="{{ url_for('benevole', id=b.id) }}" class="stretched-link text-decoration-none text-dark">{{ b.id}}</a></th>
                                     <td>{{ b.nom }}</td>
                                     <td>{{ b.prenom }}</td>
                                     <td>{{ b.contact.email }}</td>

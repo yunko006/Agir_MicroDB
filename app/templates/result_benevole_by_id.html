@@ -1,8 +1,12 @@
-{% extends "header.html" %}
+{% extends 'base.html' %}
+
+{% block page_header %}
+<h2 class="text-center">Résultat de votre recherche</h2>
+{% endblock page_header %}
 
 {% block content %}
 
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative mb-4">
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -10,17 +14,15 @@
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Email</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for benevole in benevoles %}
-                    <tr>
-                        <th scope="row"> {{ benevole.id}} </th>
+                {% for benevole in benevoles_id_ou_nom %}
+                    <tr style="transform: rotate(0);">
+                        <th scope="row"><a href="{{ url_for('benevole', id=benevole.id) }}" class="stretched-link text-decoration-none text-dark">{{ benevole.id}}</a></th>
                         <td>{{ benevole.nom }}</td>
                         <td>{{ benevole.prenom }}</td>
                         <td>{{ benevole.contact.email }}</td>
-                        <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td>
                     </tr>
                 {% endfor %}
             </tbody>

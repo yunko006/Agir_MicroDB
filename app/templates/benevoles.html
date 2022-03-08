@@ -9,9 +9,10 @@
         <div class="col-4">
             <form class="formi" id="form-search-id" action="{{ url_for('search_benevole_by_id') }}" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Rechercher un bénévole par son id" name="id" aria-label="Recipient's username" aria-describedby="button-addon2" action="{{ url_for('recherche8') }}" method="post">
+                    <input type="text" class="form-control" placeholder="Recherche par id/nom" name="id" aria-label="Recipient's username" aria-describedby="button-addon2" action="{{ url_for('recherche8') }}" method="post">
                     <button class="btn btn-outline-secondary" type="submit" form="form-search-id" id="button-addon2">Rechercher</button>
                 </div>
+            </form>
         </div>
     </div>
 </div>
@@ -19,7 +20,7 @@
 
 {% block content %}
 
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 mb-2 position-relative">
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -31,17 +32,72 @@
                 </tr>
             </thead>
             <tbody>
-                {% for benevole in benevoles %}
+                {% for benevole in all_benevoles.items %}
                     <tr>
-                        <th scope="row"> {{ benevole.id}} </th>
-                        <td>{{ benevole.nom }}</td>
+                        <th scope="row"><a href="/" class="stretched-link">{{ benevole.id}}</a></th>
+                        <td> {{benevole.nom }}</td>
                         <td>{{ benevole.prenom }}</td>
                         <td>{{ benevole.contact.email }}</td>
-                        <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td>
+                        <!-- <td> <a href="{{ url_for('benevole', id=benevole.id) }}">Voir sa fiche</a> </td> -->
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+<!-- accordion -->
+{% for benevole in all_benevoles.items %}
+<div class="accordion" id="accordion-{{ loop.index }}">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ loop.index }}">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+        {{ benevole.delegation }}
+      </button>
+    </h2>
+    <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#accordion-{{ loop.index }}">
+      <div class="accordion-body">
+        {{ benevole.prenom }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Pagination Links-->
+<div class="text-center">
+    <a href="{{ url_for('get_benevoles', page=all_benevoles.prev_num) }}"
+       class="btn btn-outline-primary
+       {% if all_benevoles.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+<!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in all_benevoles.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if all_benevoles.page == page_num %}
+            <a href="{{ url_for('get_benevoles', page=page_num) }}"
+               class="btn btn-primary">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('get_benevoles', page=page_num) }}"
+               class="btn btn-outline-primary">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('get_benevoles', page=all_benevoles.next_num) }}"
+       class="btn btn-outline-primary
+       {% if all_benevoles.page == all_benevoles.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<!-- <p class="text-center md-2">
+   Page {{ all_benevoles.page }} sur {{ all_benevoles.pages }}
+</p> -->
 
 {% endblock %}
