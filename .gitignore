@@ -120,3 +120,8 @@ app/templates/dropdown2.html
 .DS_Store
 app/update_db.py
 app/update_db.py
+app/update_db.py
+app/static/img/Logo-droit-court.jpg
+.flaskenv
+app/update_db.py
+app/templates/useless.html
