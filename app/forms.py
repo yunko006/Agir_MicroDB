@@ -4,10 +4,10 @@ from wtforms.validators import DataRequired
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    username = StringField('Nom de Compte', validators=[DataRequired()])
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    remember_me = BooleanField('Se souvenir de moi')
+    submit = SubmitField('Se connecter')
 
 
 class BenevoleForm(FlaskForm):
@@ -41,8 +41,6 @@ class BenevoleForm(FlaskForm):
 
 
 class UpdateBenevoleForm(FlaskForm):
-    id = StringField("Numéro d'adhérent", validators=[DataRequired()])
-    field = StringField('Champs', validators=[DataRequired()])
     value = StringField('Valeur', validators=[DataRequired()])
     submit = SubmitField('Mettre à jour')
 
@@ -62,5 +60,5 @@ class ChampsForm(FlaskForm):
 
 
 class SearchTextForm(FlaskForm):
-    search = StringField('Recherche', validators=[DataRequired()])
+    search = StringField('', validators=[DataRequired()], render_kw={"placeholder": "Je recherche..."})
     submit = SubmitField('Rechercher')
