@@ -32,13 +32,13 @@ bcrypt = Bcrypt(app)
 
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD')
-MONGO_URI = os.environ.get('MONGO_URI')
+MONGODB_URI = os.environ.get('MONGODB_URI')
 
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'benevole',
     'alias': 'default',
-    'host': MONGO_URI
+    'host': MONGODB_URI
 }
 
 db = MongoEngine(app)
