@@ -29,17 +29,21 @@ login_manager.not_ROLE_view = 'not_ROLE'
 # bcrypt setup
 bcrypt = Bcrypt(app)
 
+
 MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
 MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD')
+MONGO_URI = os.environ.get('MONGO_URI')
 
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'benevole',
     'alias': 'default',
-    'host': f'mongodb+srv://{MONGO_USERNAME}:{MONGO_PASSWORD}@cluster0.07jrf.mongodb.net/agir?retryWrites=true&w=majority'
+    'host': MONGO_URI
 }
 
 db = MongoEngine(app)
 
-
 from app import routes, models
+
+if __name__ == '__main__':
+    app.run()

@@ -10,13 +10,6 @@ from app.utils import *
 
 ROWS_PER_PAGE = 10
 
-login_manager.login_view = "login"
-
-
-@login_manager.user_loader
-def user_loader(username):
-    return User.objects(username=username).first()
-
 
 # redirect to login is user is not authenticated
 @login_manager.unauthorized_handler

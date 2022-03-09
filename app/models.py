@@ -83,6 +83,10 @@ class User(db.Document, UserMixin):
         return self.roles
 
 
+@login_manager.user_loader
+def user_loader(username):
+    return User.objects(username=username).first()
+
 # @login_manager.request_loader
 # def request_loader(request):
 #     username = request.form.get('username')
