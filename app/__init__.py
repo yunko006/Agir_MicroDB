@@ -30,16 +30,16 @@ login_manager.not_ROLE_view = 'not_ROLE'
 bcrypt = Bcrypt(app)
 
 
-MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
-MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD')
-MONGODB_URI = os.environ.get('MONGODB_URI')
+# MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
+# MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD')
+# MONGODB_URI = os.environ.get('MONGODB_URI')
 
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'benevole',
-    'host': MONGODB_URI,
-    'port': 27017
-}
+# app.config['MONGODB_SETTINGS'] = {
+#     'db': 'benevole',
+#     'host': MONGODB_URI,
+#     'port': 27017
+# }
 
 db = MongoEngine(app)
 

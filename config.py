@@ -1,5 +1,7 @@
 import os
 
+MONGODB_URI = os.environ.get('MONGODB_URI')
+
 
 class Config:
     DEBUG = False
@@ -7,6 +9,10 @@ class Config:
     DEVELOPMENT = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SESSION_TYPE = 'mongodb'
+    MONGODB_SETTINGS = {
+        'db': 'benevole',
+        'host': MONGODB_URI,
+    }
 
     if not SECRET_KEY:
         raise ValueError("No SECRET_KEY set for the flask app")
