@@ -14,9 +14,14 @@ class BenevoleForm(FlaskForm):
     id = StringField("Numéro d'adhérent", validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     prenom = StringField('Prenom', validators=[DataRequired()])
+    delegation = StringField('Délégation', validators=[DataRequired()])
+    volontaire = StringField(
+        "Etes vous volontaire pour participer a des missions ou des projets a l'international ?", validators=[DataRequired()])
+
     # contact
     email = StringField('Email', validators=[DataRequired()])
     numero = StringField('Numéro de téléphone', validators=[DataRequired()])
+
     # langues
     maternelle = StringField('Langue maternelle', validators=[DataRequired()])
     autonome = StringField(
@@ -25,11 +30,24 @@ class BenevoleForm(FlaskForm):
         'Langues(s) connues avec des notions', validators=[DataRequired()])
     lu_parlé_écrit = StringField(
         'Langue(s) lu parlé écrit', validators=[DataRequired()])
+
     # secteurs et domaines
     secteurs = StringField('Secteurs', validators=[DataRequired()])
     domaines = StringField('Domaines', validators=[DataRequired()])
     fonctions = StringField('Fonctions', validators=[DataRequired()])
     competences = StringField('Compétences', validators=[DataRequired()])
+
+    # volontaire
+    # inter = StringField('Compétences', validators=[DataRequired()])
+
+    # dispo
+    mission_ou_projet = StringField(
+        'Etes vous disponibles pour des Missions ou des Projets ou bien les deux ?', validators=[DataRequired()])
+    durée = StringField('Durée maximale des déplacements',
+                        validators=[DataRequired()])
+    déplacements = StringField(
+        'Nombre maximum de déplacements par an', validators=[DataRequired()])
+
     # exp inter/bénévoles
     roles = StringField('Roles', validators=[DataRequired()])
     expérience_internationale = StringField(
@@ -60,5 +78,6 @@ class ChampsForm(FlaskForm):
 
 
 class SearchTextForm(FlaskForm):
-    search = StringField('', validators=[DataRequired()], render_kw={"placeholder": "Je recherche..."})
+    search = StringField('', validators=[DataRequired()], render_kw={
+                         "placeholder": "Je recherche..."})
     submit = SubmitField('Rechercher')

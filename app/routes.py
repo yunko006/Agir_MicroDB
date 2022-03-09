@@ -94,12 +94,13 @@ def register_benevole():
         contact = Contact()
         experience_inter_benevole = ExperienceInterBenevole()
         domaines_et_secteurs = DomainesEtSecteurs()
+        dispo = Disponibilités()
 
         domaines_et_secteurs.secteurs = request.form['secteurs']
         domaines_et_secteurs.domaines = request.form['domaines']
         domaines_et_secteurs.fonctions = request.form['fonctions']
-
         domaines_et_secteurs.compétences = request.form['competences']
+
         contact.numéro = request.form['numero']
         contact.email = request.form['email']
 
@@ -113,18 +114,26 @@ def register_benevole():
             'expérience_internationale']
         experience_inter_benevole.expérience_internationale_benevole = request.form[
             'expérience_internationale_benevole']
+
+        dispo.mission_ou_projet = request.form['mission_ou_projet']
+        dispo.durée = request.form['durée']
+        dispo.nb_déplacements = request.form['déplacements']
+
         new_benevole.id = int(request.form['id'])
         new_benevole.nom = request.form['nom']
         new_benevole.prenom = request.form['prenom']
+        new_benevole.delegation = request.form['delegation']
+        new_benevole.volontaire_string = request.form['volontaire']
 
         new_benevole.langues = langues
         new_benevole.contact = contact
         new_benevole.DomainesEtSecteurs = domaines_et_secteurs
         new_benevole.ExperienceInterBenevole = experience_inter_benevole
+        new_benevole.disponibilités = dispo
 
         new_benevole.save()
         flash('Succès ! Nouveau bénévole bien enregistré !')
-        return redirect(url_for('get_benevoles'))
+        return redirect(url_for('accordeon_delegation'))
 
     return render_template('register_benevole.html', title='register_benevole', benevole=benevole)
 
@@ -264,11 +273,11 @@ def not_ROLE():
 
 
 # not safe to use !
-# @app.route('/force_update')
-# @admin_required
-# def update_db_from_script():
+@app.route('/force_update')
+@admin_required
+def update_db_from_script():
 
-#     # xd = update_benevole_with_volontaire_fied()
-#     test = create_user()
+    xd = update_benevole_with_volontaire_fied()
+    # test = create_user()
 
-#     return test
+    return xd

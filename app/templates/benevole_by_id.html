@@ -142,18 +142,20 @@
         </li>
         <!-- Volontaire -->
         <div class="card-header text-center">
-            Type de volontariat
+            Volontaire
         </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-4">
-                        Volontaire
+                        Volontaire à l'international
                     </div>
                     <div class="col-8">
-                        {% if b.volontaire.inter %}
-                            A l'internationnal
+                        {% if b.volontaire_string %}
+                            {{ b.volontaire_string }}
+                        {% elif b.volontaire.inter %}
+                            Oui
                         {% else %}
-                            Depuis la France uniquement
+                            Oui, Depuis la France uniquement
                         {% endif %}
                     </div>
             </div>

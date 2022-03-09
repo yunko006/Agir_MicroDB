@@ -11,6 +11,7 @@ class Disponibilités(db.EmbeddedDocument):
 class Volontaire(db.EmbeddedDocument):
     inter = db.BooleanField(required=True, default=True)
     france_uniquement = db.BooleanField(default=False)
+    # type_volontariat = db.StringField(required=True)
 
 
 class ExperienceInterBenevole(db.EmbeddedDocument):
@@ -44,8 +45,8 @@ class Benevole(db.Document):
     id = db.IntField(primary_key=True)
     nom = db.StringField()
     prenom = db.StringField()
-    # delegation
     delegation = db.StringField()
+    volontaire_string = db.StringField()
     contact = db.EmbeddedDocumentField(Contact)
     langues = db.EmbeddedDocumentField(Langues)
     DomainesEtSecteurs = db.EmbeddedDocumentField(DomainesEtSecteurs)
