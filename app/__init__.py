@@ -37,7 +37,8 @@ MONGODB_URI = os.environ.get('MONGODB_URI')
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'benevole',
-    'host': MONGODB_URI
+    'host': MONGODB_URI,
+    'port': 27017
 }
 
 db = MongoEngine(app)
