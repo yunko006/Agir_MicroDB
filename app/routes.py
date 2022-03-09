@@ -7,7 +7,6 @@ from app.role_required import *
 
 from app.utils import *
 
-# from app.update_db import update_benevole_with_volontaire_fied, create_user
 
 ROWS_PER_PAGE = 10
 
@@ -270,14 +269,3 @@ def text_result_combinaison():
 @login_required
 def not_ROLE():
     return render_template('unauthorized.html', title='Pas autorisé')
-
-
-# not safe to use !
-# @app.route('/force_update')
-# @admin_required
-# def update_db_from_script():
-
-#     xd = update_benevole_with_volontaire_fied()
-#     # test = create_user()
-
-#     return xd

@@ -72,3 +72,14 @@ def test_query():
     benevoles = Benevole.objects(nom__icontains="st")
 
     return render_template('query.html', title='query_test', benevoles=benevoles)
+
+
+# not safe to use !
+# @app.route('/force_update')
+# @admin_required
+# def update_db_from_script():
+
+#     xd = update_benevole_with_volontaire_fied()
+#     # test = create_user()
+
+#     return xd
