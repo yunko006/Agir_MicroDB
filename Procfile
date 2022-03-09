@@ -1,1 +1,1 @@
-web: gunicorn app:microdb
+web: gunicorn __init__:app
