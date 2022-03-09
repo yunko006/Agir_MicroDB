@@ -12,6 +12,9 @@ from app.role_required import not_ROLE
 app = Flask(__name__)
 app.config.from_object('config.DevelopmentConfig')
 
+# mongodb
+db = MongoEngine(app)
+
 # Check Configuration section for more details
 sess = Session()
 sess.init_app(app)
@@ -41,9 +44,5 @@ bcrypt = Bcrypt(app)
 #     'port': 27017
 # }
 
-db = MongoEngine(app)
 
 from app import routes, models
-
-if __name__ == '__main__':
-    app.run()
