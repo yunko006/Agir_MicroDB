@@ -4,6 +4,7 @@ import os
 class Config:
     DEBUG = False
     TESTING = False
+    DEVELOPMENT = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SESSION_TYPE = 'mongodb'
 
