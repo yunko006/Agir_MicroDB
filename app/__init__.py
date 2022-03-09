@@ -37,7 +37,6 @@ MONGODB_URI = os.environ.get('MONGODB_URI')
 
 app.config['MONGODB_SETTINGS'] = {
     'db': 'benevole',
-    'alias': 'default',
     'host': MONGODB_URI
 }
 
