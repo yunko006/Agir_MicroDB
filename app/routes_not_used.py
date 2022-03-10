@@ -83,3 +83,9 @@ def test_query():
 #     # test = create_user()
 
 #     return xd
+
+
+search text butoon:
+<div class = "text-center" >
+    <a type = "button" class = "btn btn-outline-primary me-2" href = "{{ url_for('text_result_combinaison') }}" > Faire une recherche par combinaison sur ces resultats < /a >
+< / div >
