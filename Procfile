@@ -1,1 +1,1 @@
-web: gunicorn microdb:app
+web: gunicorn microdb:app --preload
