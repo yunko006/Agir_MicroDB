@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_session import Session
 from config import DevelopmentConfig
-from flask_mongoengine import MongoEngine
+from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap5
@@ -14,10 +14,11 @@ app.config.from_object('config.DevelopmentConfig')
 
 # mongodb
 db = MongoEngine(app)
+app.session_interface = MongoEngineSessionInterface(db)
 
 # Check Configuration section for more details
-sess = Session()
-sess.init_app(app)
+# sess = Session()
+# sess.init_app(app)
 
 # bootstrap
 bootstrap = Bootstrap5(app)

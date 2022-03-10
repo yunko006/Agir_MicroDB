@@ -216,46 +216,46 @@ def search_text():
             search).order_by('$text_score')
 
         # set la variable a la session pour pouvoir y aceder dans une autre route.
-        session["benevoles_a_combiner"] = benevoles_trouver_par_text
+        # session["benevoles_a_combiner"] = benevoles_trouver_par_text
 
         return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search, search_form=search_form)
 
     return render_template('search_test_form.html', title='Search Text', search_form=search_form, benevoles=benevoles)
 
 
-@app.route('/text_result_combinaison', methods=['GET', 'POST'])
-@AI_required
-def text_result_combinaison():
-    base_queryset = session.get('benevoles_a_combiner')
+# @app.route('/text_result_combinaison', methods=['GET', 'POST'])
+# @AI_required
+# def text_result_combinaison():
+#     base_queryset = session.get('benevoles_a_combiner')
 
-    if request.method == 'POST':
-        recherche_list = request.form.getlist('recherche')
-        champs_list = request.form.getlist('champs')
+#     if request.method == 'POST':
+#         recherche_list = request.form.getlist('recherche')
+#         champs_list = request.form.getlist('champs')
 
-        if request.form.get('Inter'):
-            sub_queryset_benevoles = base_queryset.filter(
-                volontaire__inter=True)
+#         if request.form.get('Inter'):
+#             sub_queryset_benevoles = base_queryset(
+#                 volontaire__inter=True)
 
-            final_query = convertion(recherche_list, champs_list)
+#             final_query = convertion(recherche_list, champs_list)
 
-            benevoles_query = queryset_by_element(
-                final_query, sub_queryset_benevoles)
+#             benevoles_query = queryset_by_element(
+#                 final_query, sub_queryset_benevoles)
 
-            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
+#             return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
 
-        if request.form.get('France'):
-            sub_queryset_benevoles = base_queryset.filter(
-                volontaire__france_uniquement=True)
+#         if request.form.get('France'):
+#             sub_queryset_benevoles = base_queryset.filter(
+#                 volontaire__france_uniquement=True)
 
-            final_query = convertion(recherche_list, champs_list)
+#             final_query = convertion(recherche_list, champs_list)
 
-            benevoles_query = queryset_by_element(
-                final_query, queryset_benevoles)
+#             benevoles_query = queryset_by_element(
+#                 final_query, queryset_benevoles)
 
-            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
+#             return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
 
-    else:
-        return render_template('combinaison_text.html', title='Huit')
+#     else:
+#         return render_template('combinaison_text.html', title='Huit')
 
 
 @app.route('/not-ROLE/')
