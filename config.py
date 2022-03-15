@@ -8,7 +8,6 @@ class Config:
     TESTING = False
     DEVELOPMENT = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SESSION_TYPE = 'mongodb'
     MONGODB_SETTINGS = {
         'db': 'benevole',
         'host': MONGODB_URI,
