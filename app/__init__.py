@@ -1,4 +1,5 @@
 import os
+import redis
 from flask import Flask
 from flask_session import Session
 from config import DevelopmentConfig
@@ -14,11 +15,29 @@ app.config.from_object('config.DevelopmentConfig')
 
 # mongodb
 db = MongoEngine(app)
-app.session_interface = MongoEngineSessionInterface(db)
+# app.session_interface = MongoEngineSessionInterface(db)
 
-# Check Configuration section for more details
-# sess = Session()
-# sess.init_app(app)
+# Configure MongoDB for storing the session data on the server-side
+# app.config['SESSION_TYPE'] = 'mongodb'
+# app.config['SESSION_PERMANENT'] = False
+# app.config['SESSION_USE_SIGNER'] = True
+# app.config['SESSION_MONGODB'] = os.environ.get('MONGODB_URI')
+
+# Create and initialize the Flask-Session object AFTER `app` has been configured
+# server_session = Session(app)
+REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
+REDIS_HOST = os.environ.get('REDIS_HOST')
+REDIS_PORT = os.environ.get('REDIS_PORT')
+# Configure Redis for storing the session data on the server-side
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_REDIS'] = redis.from_url(
+    f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}')
+
+# Create and initialize the Flask-Session object AFTER `app` has been configured
+server_session = Session(app)
+
 
 # bootstrap
 bootstrap = Bootstrap5(app)
@@ -32,18 +51,6 @@ login_manager.not_ROLE_view = 'not_ROLE'
 
 # bcrypt setup
 bcrypt = Bcrypt(app)
-
-
-# MONGO_USERNAME = os.environ.get('MONGO_USERNAME')
-# MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD')
-# MONGODB_URI = os.environ.get('MONGODB_URI')
-
-
-# app.config['MONGODB_SETTINGS'] = {
-#     'db': 'benevole',
-#     'host': MONGODB_URI,
-#     'port': 27017
-# }
 
 
 from app import routes, models
