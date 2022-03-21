@@ -147,6 +147,18 @@ def help():
     return render_template('help.html', title='Aide/FAQ')
 
 
+@app.route('/contact')
+@login_required
+def contact():
+    return render_template('contact.html', title='Contact')
+
+
+@app.route('/a_propos')
+@login_required
+def a_propos():
+    return render_template('a_propos.html', title='A Propos')
+
+
 @app.route('/recherche8', methods=['GET', 'POST'])
 @AI_required
 def recherche8():
