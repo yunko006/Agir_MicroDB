@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <!-- <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image"> -->
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image">
+    <title>
+      {% block title %} {% endblock %}
+    </title>
     <!-- Bootstrap -->
     {{ bootstrap.load_css() }}
 
