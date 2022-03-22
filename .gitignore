@@ -125,3 +125,6 @@ app/static/img/Logo-droit-court.jpg
 .flaskenv
 app/update_db.py
 app/templates/useless.html
+app/templates/header_login.html
+app/templates/card_bizarre.html
+app/templates/benevole_update_form.html
