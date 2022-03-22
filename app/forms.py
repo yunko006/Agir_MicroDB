@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, TextAreaField
 from wtforms.validators import DataRequired
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Nom de Compte', validators=[DataRequired()])
+    username = StringField('Identifiant', validators=[DataRequired()])
     password = PasswordField('Mot de passe', validators=[DataRequired()])
     remember_me = BooleanField('Se souvenir de moi')
     submit = SubmitField('Se connecter')
@@ -32,10 +32,10 @@ class BenevoleForm(FlaskForm):
         'Langue(s) lu parlé écrit', validators=[DataRequired()])
 
     # secteurs et domaines
-    secteurs = StringField('Secteurs', validators=[DataRequired()])
-    domaines = StringField('Domaines', validators=[DataRequired()])
-    fonctions = StringField('Fonctions', validators=[DataRequired()])
-    competences = StringField('Compétences', validators=[DataRequired()])
+    secteurs = TextAreaField('Secteurs', validators=[DataRequired()])
+    domaines = TextAreaField('Domaines', validators=[DataRequired()])
+    fonctions = TextAreaField('Fonctions', validators=[DataRequired()])
+    competences = TextAreaField('Compétences', validators=[DataRequired()])
 
     # volontaire
     # inter = StringField('Compétences', validators=[DataRequired()])
@@ -50,16 +50,16 @@ class BenevoleForm(FlaskForm):
 
     # exp inter/bénévoles
     roles = StringField('Roles', validators=[DataRequired()])
-    expérience_internationale = StringField(
+    expérience_internationale = TextAreaField(
         'Expérience Internationale', validators=[DataRequired()])
-    expérience_internationale_benevole = StringField(
+    expérience_internationale_benevole = TextAreaField(
         'Expérience Internationale comme Bénévole', validators=[DataRequired()])
     # submit
     submit = SubmitField('Enregistrer')
 
 
 class UpdateBenevoleForm(FlaskForm):
-    value = StringField('Valeur', validators=[DataRequired()])
+    value = TextAreaField('', validators=[DataRequired()])
     submit = SubmitField('Mettre à jour')
 
 
