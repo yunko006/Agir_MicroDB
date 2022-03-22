@@ -1,24 +1,12 @@
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2 border-bottom">
   <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
     <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" width="80" height="64">
-    {% if current_user.is_authenticated %}
     <div class="row px-2">
       <span class="fs-4 px-5 text-primary">AGIRabcd</span>
       <small class="fst-italic text-primary">Profil des volontaires international</small>
     </div>
-    {% else %}
-    </a>
-    <div class="col px-5">
-      <div class="row px-5">
-        <span class="fs-4 px-5 text-primary">AGIRabcd</span>
-        <small class="fst-italic text-primary">Profil des volontaires international</small>
-      </div>
-    </div>
-    {% endif %}
   </a>
 
-
-  {% if current_user.is_authenticated %}
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
     <li><a href="/" class="nav-link px-2 link-dark">Accueil</a></li>
     <!-- dropdown bénévole -->
@@ -54,5 +42,5 @@
   <div class="col-md-3 text-end">
     <a type="button" class="btn btn-outline-primary me-2" href="{{ url_for('logout') }}">Se déconnecter</a>
   </div>
-  {% endif %}
+
 </header>
