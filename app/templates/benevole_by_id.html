@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_messages %}
 
 {% block title %} Fiche compétence {% endblock %}
 
@@ -9,25 +10,23 @@
 <!-- flash messages -->
 {% with messages = get_flashed_messages() %}
    {% if messages %}
-      {% for message in messages %}
-         {{ message }}
-      {% endfor %}
+         {{ render_messages() }}
    {% endif %}
 {% endwith %}
 <!-- end -->
 
 <!-- montrer la fiche d'un intervenant -->
   {% for b in benevole_par_id %}
-  <div class="card shadow p-3 mb-5 bg-white rounded">
-    <div class="card-header text-center bg-light text-dark">
+  <div class="card shadow p-3 mb-5 bg-body rounded">
+    <div class="card-header bg-primary rounded text-white text-center">
         Informations personnelles
     </div>
     <!-- Infos générales -->
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Numéro d'adhérent
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Numéro d'adhérent</p>
                     </div>
                     <div class="col">
                         {{ b.id}}
@@ -36,28 +35,28 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Nom
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Nom</p>
                     </div>
-                    <div class="col-8">
+                    <div class="col">
                         {{ b.nom }} {{ b.prenom}}
                     </div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Adresse Mail
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Adresse Mail</p>
                     </div>
                     <div class="col">
                         {{ b.contact.email}}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2 d-flex flex-row-reverse">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                               Modifier
-                            </button>
+                            </a>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -88,18 +87,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Numéro de téléphone
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Numéro de téléphone</p>
                     </div>
                     <div class="col">
                         {{ b.contact.numéro}}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2 d-flex flex-row-reverse">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalNuméro">
+                            <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalNuméro">
                               Modifier
-                            </button>
+                            </a>
 
                             <!-- Modal -->
                             <div class="modal fade" id="ModalNuméro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,29 +128,29 @@
             </div>
         </li>
         <!-- Délégation -->
-        <div class="card-header text-center">
+        <div class="card-header bg-primary rounded text-white text-center">
             Délégation
         </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Délégation
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Délégation</p>
                     </div>
-                    <div class="col-8">
+                    <div class="col">
                         {{ b.delegation }}
                     </div>
             </div>
         </li>
         <!-- Volontaire -->
-        <div class="card-header text-center">
+        <div class="card-header bg-primary rounded text-white text-center">
             Volontaire
         </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Volontaire à l'international
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Volontaire à l'international</p>
                     </div>
-                    <div class="col-8">
+                    <div class="col">
                         {% if b.volontaire_string %}
                             {{ b.volontaire_string }}
                         {% elif b.volontaire.inter %}
@@ -162,35 +161,35 @@
                     </div>
             </div>
         </li>
-        <div class="card-header text-center">
+        <div class="card-header bg-primary rounded text-white text-center">
             Disponibilités
         </div>
         <!-- Disponibilités -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Type de mission/projet
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Type de mission/projet</p>
                     </div>
                     <div class="col">
                         {{ b.disponibilités.mission_ou_projet }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#ModalMissionsProjets">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalMissionsProjets">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalMissionsProjets" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Mettre à jour le type de disponibilité</h5>
+                                        <h5 class="modal-title" id="ModalMissionsProjets">Mettre à jour le type de disponibilité</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='mission_ou_projet')}}" method="post">
+                                        <form class="formi" id="form-modal-missions-update" action="{{url_for('update_benevole', id=b.id, champs='mission_ou_projet')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.disponibilités.mission_ou_projet }}" name="value" method="post">
                                             </div>
@@ -198,7 +197,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-missions-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -209,18 +208,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Durée du déplacement
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Durée du déplacement</p>
                     </div>
                     <div class="col">
                         {{ b.disponibilités.durée }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalDurée">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDurée">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalDurée" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -231,7 +230,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='durée')}}" method="post">
+                                        <form class="formi" id="form-modal-durée-update" action="{{url_for('update_benevole', id=b.id, champs='durée')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.disponibilités.durée }}" name="value" method="post">
                                             </div>
@@ -239,7 +238,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-durée-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -250,18 +249,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Nombre de déplacements
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Nombre de déplacements</p>
                     </div>
                     <div class="col">
                         {{ b.disponibilités.nb_déplacements }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalDéplacements">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDéplacements">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalDéplacements" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -272,7 +271,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='nb_déplacements')}}" method="post">
+                                        <form class="formi" id="form-modal-nb-update" action="{{url_for('update_benevole', id=b.id, champs='nb_déplacements')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.disponibilités.nb_déplacements }}" name="value" method="post">
                                             </div>
@@ -280,7 +279,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-nb-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -289,24 +288,24 @@
                     {% endif %}
             </div>
         </li>
-        <div class="card-header text-center">
+        <div class="card-header bg-primary rounded text-white text-center">
             Langues
         </div>
         <!-- Langues -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Langue maternelle
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Langue maternelle</p>
                     </div>
                     <div class="col">
                         {{b.langues.maternelle }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalLangMaternelle">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangMaternelle">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalLangMaternelle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -317,7 +316,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='maternelle')}}" method="post">
+                                        <form class="formi" id="form-modal-maternelle-update" action="{{url_for('update_benevole', id=b.id, champs='maternelle')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.langues.maternelle }}" name="value" method="post">
                                             </div>
@@ -325,7 +324,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-maternelle-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -336,18 +335,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Autonome en
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Autonome en</p>
                     </div>
                     <div class="col">
                         {{b.langues.autonome }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalLangAutonome">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangAutonome">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalLangAutonome" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -358,7 +357,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='autonome')}}" method="post">
+                                        <form class="formi" id="form-modal-autonome-update" action="{{url_for('update_benevole', id=b.id, champs='autonome')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.langues.autonome }}" name="value" method="post">
                                             </div>
@@ -366,7 +365,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-autonome-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -377,18 +376,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Notions de
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Notions de</p>
                     </div>
                     <div class="col">
                         {{ b.langues.notions }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalLangNotions">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangNotions">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalLangNotions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -399,7 +398,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='notions')}}" method="post">
+                                        <form class="formi" id="form-modal-notions-update" action="{{url_for('update_benevole', id=b.id, champs='notions')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.langues.notions }}" name="value" method="post">
                                             </div>
@@ -407,7 +406,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-notions-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -418,18 +417,18 @@
         </li>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Langues Lu Parlé Ecrit
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Langues Lu Parlé Ecrit</p>
                     </div>
                     <div class="col">
                         {{ b.langues.lu_parlé_écrit }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalLangLuParléEcrit">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangLuParléEcrit">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalLangLuParléEcrit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -440,7 +439,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='lu_parlé_écrit')}}" method="post">
+                                        <form class="formi" id="form-modal-parlé-update" action="{{url_for('update_benevole', id=b.id, champs='lu_parlé_écrit')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.langues.lu_parlé_écrit }}" name="value" method="post">
                                             </div>
@@ -448,7 +447,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-parlé-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -457,24 +456,24 @@
                     {% endif %}
             </div>
         </li>
-        <div class="card-header text-center">
+        <div class="card-header bg-primary rounded text-white text-center">
             Domaines et secteurs d'intervention
         </div>
         <!-- Domaines et secteurs -->
         <li class="list-group-item">
             <div class="row py-2 mb-1">
-                    <div class="col-4">
-                        Secteurs
+                    <div class="col-2">
+                        <p class="fw-bolder text-muted">Secteurs</p>
                     </div>
                     <div class="col">
                         {{ b.DomainesEtSecteurs.secteurs }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalSecteurs">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalSecteurs">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalSecteurs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -485,7 +484,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='secteurs')}}" method="post">
+                                        <form class="formi" id="form-modal-secteurs-update" action="{{url_for('update_benevole', id=b.id, champs='secteurs')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.secteurs }}" name="value" method="post">
                                             </div>
@@ -493,7 +492,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-secteurs-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -505,17 +504,17 @@
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Domaines
+                        <p class="fw-bolder text-muted">Domaines</p>
                     </div>
                     <div class="col">
                         {{ b.DomainesEtSecteurs.domaines }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalDomaines">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDomaines">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalDomaines" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -526,7 +525,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='domaines')}}" method="post">
+                                        <form class="formi" id="form-modal-domaines-update" action="{{url_for('update_benevole', id=b.id, champs='domaines')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.domaines }}" name="value" method="post">
                                             </div>
@@ -534,7 +533,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-domaines-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -546,17 +545,17 @@
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Compétences
+                        <p class="fw-bolder text-muted">Compétences</p>
                     </div>
                     <div class="col">
                         {{ b.DomainesEtSecteurs.compétences }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalCompétences">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalCompétences">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalCompétences" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -567,7 +566,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='compétences')}}" method="post">
+                                        <form class="formi" id="form-modal-compétences-update" action="{{url_for('update_benevole', id=b.id, champs='compétences')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.compétences }}" name="value" method="post">
                                             </div>
@@ -575,7 +574,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-compétences-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -587,17 +586,17 @@
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Fonctions
+                        <p class="fw-bolder text-muted">Fonctions</p>
                     </div>
                     <div class="col">
                         {{ b.DomainesEtSecteurs.fonctions }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalFonctions">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalFonctions">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalFonctions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -608,7 +607,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='fonctions')}}" method="post">
+                                        <form class="formi" id="form-modal-fonctions-update" action="{{url_for('update_benevole', id=b.id, champs='fonctions')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.fonctions }}" name="value" method="post">
                                             </div>
@@ -616,7 +615,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-fonctions-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -627,23 +626,23 @@
         </li>
 
         <!-- Expérience du bénévole -->
-        <div class="card-header text-center">
-            Expériences
+        <div class="card-header bg-primary rounded text-white text-center">
+            Expériences Internationnales
         </div>
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Rôles
+                        <p class="fw-bolder text-muted">Rôles</p>
                     </div>
                     <div class="col">
                         {{ b.ExperienceInterBenevole.roles }}
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalRoles">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalRoles">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalRoles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -654,7 +653,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='roles')}}" method="post">
+                                        <form class="formi" id="form-modal-roles-update" action="{{url_for('update_benevole', id=b.id, champs='roles')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.roles }}" name="value" method="post">
                                             </div>
@@ -662,7 +661,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-roles-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -674,17 +673,17 @@
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Expérience internationnale
+                        <p class="fw-bolder text-muted">Professionelles</p>
                     </div>
                     <div class="col">
-                        {{ b.ExperienceInterBenevole.expérience_internationale }}
+                        <p class="lh-sm">{{ b.ExperienceInterBenevole.expérience_internationale }}</p>
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalExpInter">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalExpInter">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalExpInter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -695,7 +694,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale')}}" method="post">
+                                        <form class="formi" id="form-modal-inter-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.expérience_internationale }}" name="value" method="post">
                                             </div>
@@ -703,7 +702,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-inter-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
@@ -715,17 +714,17 @@
         <li class="list-group-item">
             <div class="row py-2 mb-1">
                     <div class="col-2">
-                        Expérience internationnale comme bénévole
+                        <p class="fw-bolder text-muted">Comme Bénévole</p>
                     </div>
                     <div class="col">
-                        {{ b.ExperienceInterBenevole.expérience_internationale_benevole }}
+                        <p class="lh-sm">{{ b.ExperienceInterBenevole.expérience_internationale_benevole }}</p>
                     </div>
                     {% if 'AI' in current_user.roles %}
-                    <div class="col-2">
+                    <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ModalExpBénévole">
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalExpBénévole">
                             Modifier
-                        </button>
+                        </a>
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalExpBénévole" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -736,7 +735,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="formi" id="form-modal-numéro-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale_benevole')}}" method="post">
+                                        <form class="formi" id="form-modal-bénévole-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale_benevole')}}" method="post">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.expérience_internationale_benevole }}" name="value" method="post">
                                             </div>
@@ -744,7 +743,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button class="btn btn-primary" type="submit" form="form-modal-numéro-update">Mettre à jour</button>
+                                        <button class="btn btn-primary" type="submit" form="form-modal-bénévole-update">Mettre à jour</button>
                                     </div>
                                 </div>
                             </div>
