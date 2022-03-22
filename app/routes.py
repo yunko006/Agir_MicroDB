@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from app import app, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-from app.forms import LoginForm, BenevoleForm, SearchTextForm
+from app.forms import LoginForm, BenevoleForm, SearchTextForm, UpdateBenevoleForm
 from app.models import *
 from app.role_required import *
 
@@ -40,9 +40,12 @@ def login():
                 if not is_safe_url(next):
                     return flask.abort(400)
 
-                return redirect(url_for('index'))
+                if 'AI' in user.roles:
+                    return redirect(url_for('search_text'))
+                else:
+                    return redirect(url_for('accordeon_delegation'))
 
-    return render_template('login2.html', title="Sign In", form=form)
+    return render_template('login.html', title="Sign In", form=form)
 
 
 @app.route('/logout')
@@ -137,7 +140,7 @@ def update_benevole(id, champs):
     if request.method == 'POST':
         value = request.form.get('value')
         modal_update_benevole(id, champs, value)
-        flash(f"La fiche a bien été mise à jour!")
+        flash('La fiche a bien été mise à jour!', 'info')
         return redirect(url_for('benevole', id=id))
 
 
@@ -193,12 +196,14 @@ def recherche8():
         return render_template('query8.html', title='Huit')
 
 
-@app.route('/bénévole/<id>')
+@app.route('/bénévole/<id>', methods=['GET', 'POST'])
 @login_required
 def benevole(id):
+    form = UpdateBenevoleForm()
     benevole_par_id = Benevole.objects(id=id)
 
     return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id)
+    # return render_template('benevole_update_form.html', benevole_par_id=benevole_par_id, form=form)
 
 
 @app.route('/result_benevole_by_id', methods=['GET', 'POST'])
