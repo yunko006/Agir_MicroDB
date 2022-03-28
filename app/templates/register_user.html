@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %} Enregistrer un utilisateur {% endblock %}
+
+{% block page_header %}
+    <h2 class="d-flex justify-content-center mb-2">Créer un utilisateur</h2>
+{% endblock page_header %}
+
+
+{% block content %}
+<div class="form-group">
+    <form  action="" method="post" novalidate>
+        {{ render_form(form) }}
+    </form>
+</div>
+{% endblock %}

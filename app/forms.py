@@ -81,3 +81,12 @@ class SearchTextForm(FlaskForm):
     search = StringField('', validators=[DataRequired()], render_kw={
                          "placeholder": "Je recherche..."})
     submit = SubmitField('Rechercher')
+
+
+class NewUserForm(FlaskForm):
+    identifiant = StringField('Identifiant', validators=[DataRequired()])
+    password = StringField('Mot de passe', validators=[DataRequired()])
+    roles = StringField('Roles pour cette utilisateur',
+                        validators=[DataRequired()])
+    delegation = StringField('Délégation', validators=[DataRequired()])
+    submit = SubmitField('Créer un nouvel utilisateur')
