@@ -485,9 +485,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-secteurs-update" action="{{url_for('update_benevole', id=b.id, champs='secteurs')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.secteurs }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value" rows="5" cols="55">{{ b.DomainesEtSecteurs.secteurs }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -526,9 +524,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-domaines-update" action="{{url_for('update_benevole', id=b.id, champs='domaines')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.domaines }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value" rows="5" cols="55">{{ b.DomainesEtSecteurs.domaines }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -567,9 +563,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-compétences-update" action="{{url_for('update_benevole', id=b.id, champs='compétences')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.compétences }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value" rows="5" cols="55">{{ b.DomainesEtSecteurs.compétences }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -608,9 +602,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-fonctions-update" action="{{url_for('update_benevole', id=b.id, champs='fonctions')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.DomainesEtSecteurs.fonctions }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value" rows="5" cols="55">{{ b.DomainesEtSecteurs.fonctions }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -654,9 +646,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-roles-update" action="{{url_for('update_benevole', id=b.id, champs='roles')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.roles }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value" rows="5" cols="55">{{ b.ExperienceInterBenevole.roles }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -695,9 +685,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="formi" id="form-modal-inter-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.expérience_internationale }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" id="autosize" name="value" style="width:99%;">{{ b.ExperienceInterBenevole.expérience_internationale }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -728,17 +716,15 @@
 
                         <!-- Modal -->
                         <div class="modal fade" id="ModalExpBénévole" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Mettre à jour l'expérience en tant que bénévole</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" id="autoresizing">
                                         <form class="formi" id="form-modal-bénévole-update" action="{{url_for('update_benevole', id=b.id, champs='expérience_internationale_benevole')}}" method="post">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" value="{{ b.ExperienceInterBenevole.expérience_internationale_benevole }}" name="value" method="post">
-                                            </div>
+                                            <textarea class="form-control" name="value">{{ b.ExperienceInterBenevole.expérience_internationale_benevole }}</textarea>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
@@ -752,10 +738,28 @@
                     {% endif %}
             </div>
         </li>
-
+    {% endfor %}
     </ul>
+</div>
 
-  </div>
-  {% endfor %}
+
+<!-- Script pour auto resize quand on appui sur entrée dans un textarea -->
+<script type="text/javascript">
+
+
+const tx = document.getElementsByTagName("textarea");
+for (let i = 0; i < tx.length; i++) {
+    tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+    tx[i].addEventListener("input", OnInput, false);
+}
+
+
+function OnInput() {
+    this.style.height = "auto";
+    this.style.height = (this.scrollHeight) + "px";
+}
+
+
+</script>
 
 {% endblock %}
