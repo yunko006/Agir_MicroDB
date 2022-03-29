@@ -27,7 +27,7 @@
 
 
       <div class="col-md-3 text-end">
-        <a href="#" class="text-decoration-none">Contact</a>
+        <a href="{{ url_for('contact') }}" class="text-decoration-none">Contact</a>
       </div>
     </header>
     </div>
@@ -49,7 +49,7 @@
                 </form>
               </div>
             </div>
-          <p class="card-text text-end"><small class="text-muted"><a href="#" class="text-decoration-none">Contact</a></small></p>
+          <p class="card-text text-end"><small class="text-muted"><a href="{{ url_for('contact') }}" class="text-decoration-none">Contact</a></small></p>
         </div>
 
         {% endblock %}
