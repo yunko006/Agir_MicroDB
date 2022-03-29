@@ -198,25 +198,17 @@
     </div>
     <!--  -->
       <!-- pas radio mais marche -->
-      <input class="form-check-input" type="checkbox" id="inter" name="Inter"
+      <!-- <input class="form-check-input" type="checkbox" id="inter" name="Inter"
          checked>
       <label for="inter">Inter</label>
 
       <input class="form-check-input" type="checkbox" id="france" name="France">
-      <label for="france">France uniquement</label>
+      <label for="france">France uniquement</label> -->
 
-      <!-- Copier bootstrap -->
-      <!-- <div class="form-check">
-        <input class="form-check-input" type="radio" name="inter" id="inter" checked>
-        <label class="form-check-label" for="inter">
-          Inter
-        </label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="france" id="france">
-        <label class="form-check-label" for="france">
-          France uniquement
-        </label>
-      </div> -->
+    {% if 'AI' in current_user.roles %}
+        <input class="form-check-input" type="checkbox" id="etendre" name="Etendre">
+        <label for="france">Etendre à tous les bénévoles</label>
+    {% endif %}
   </form>
   <button class="btn btn-primary" type="submit" form="my-form">Rechercher</button>
 </div>
