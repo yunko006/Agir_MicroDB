@@ -4,54 +4,54 @@
 {% block title %} Résultat recherche {% endblock %}
 {% block page_header %}
 
-  <!-- Jumbotron -->
-    <div id="intro" class="px-2 pt-5 my-2 p-5 mb-4 text-center bg-light">
-      <form class="d-flex justify-content-center" action="/search_text" method="post" novalidate>
-        {{ search_form.hidden_tag() }}
+<!-- Jumbotron -->
+<div id="intro" class="px-2 pt-5 my-2 p-5 mb-4 bg-light">
+    <form class="text-center" id="search_text" action="{{ url_for('search_text') }}" method="post">
         <div class="container">
-            <div class="row justify-content-center mb-2">
-                <div class="col-8">
-                    {{ render_field(search_form.search, form_type="inline", class="form-control") }}
-                </div>
-            </div>
             <div class="row">
+                <div class="col-2"></div>
                 <div class="col">
-                    {{ render_field(search_form.submit) }}
+                    <div class="input-group mb-3">
+                            <input type="text" class="form-control" value="{{ search }}" name="search" aria-label="Recherche" aria-describedby="button-addon2" action="{{ url_for('search_text') }}" method="post">
+                            <button class="btn btn-primary" type="submit" form="search_text" id="button-addon2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                </svg>
+                            </button>
+                    </div>
                 </div>
+                <div class="col-2"></div>
             </div>
         </div>
-      </form>
-    </div>
-
-  <!-- Jumbotron -->
+    </form>
+</div>
 
 {% endblock page_header %}
 {% block content %}
 
-<h4>Résultats de votre recherche</h4>
-    <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 mb-4 position-relative">
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Numéro d'Adhérent</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Email</th>
+<!-- <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 mb-4 position-relative"> -->
+    <table class="table table-hover fs-6">
+        <thead class="thead-dark">
+            <tr>
+                <th>Numéro d'Adhérent</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for benevole in benevoles_trouver_par_text %}
+                <tr style="transform: rotate(0);">
+                    <th scope="row"><a href="{{ url_for('benevole', id=benevole.id) }}" class="stretched-link text-decoration-none text-dark">{{ benevole.id}}</a></th>
+                    <td>{{ benevole.nom }}</td>
+                    <td>{{ benevole.prenom }}</td>
+                    <td>{{ benevole.contact.email }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for benevole in benevoles_trouver_par_text %}
-                    <tr style="transform: rotate(0);">
-                        <th scope="row"><a href="{{ url_for('benevole', id=benevole.id) }}" class="stretched-link text-decoration-none text-dark">{{ benevole.id}}</a></th>
-                        <td>{{ benevole.nom }}</td>
-                        <td>{{ benevole.prenom }}</td>
-                        <td>{{ benevole.contact.email }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% endfor %}
+        </tbody>
+    </table>
+<!-- </div> -->
 <div class="text-center">
-    <a type="button" class="btn btn-outline-primary me-2" href="{{ url_for('text_result_combinaison') }}">Faire une recherche par combinaison sur ces resultats</a>
+    <a type="button" class="btn btn-outline-primary me-2" href="{{ url_for('text_result_combinaison') }}">Affiner ces résultats</a>
 </div>
 {% endblock %}

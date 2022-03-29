@@ -10,20 +10,23 @@
 
 {% block content %}
 
-<form class="d-flex justify-content-center" action="/search_text" method="post" novalidate>
-    {{ search_form.hidden_tag() }}
-        <div class="container">
-            <div class="row justify-content-center mb-2">
-                <div class="col-8">
-                    {{ render_field(search_form.search, form_type="inline", class="form-control") }}
+<form class="text-center" id="search_text" action="{{ url_for('search_text') }}" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" value="{{ search }}" name="search" aria-label="Recherche" placeholder="Je recherche..." aria-describedby="button-addon2" action="{{ url_for('search_text') }}" method="post">
+                    <button class="btn btn-primary" type="submit" form="search_text" id="button-addon2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col">
-                    {{ render_field(search_form.submit) }}
-                </div>
-            </div>
+            <div class="col-2"></div>
         </div>
+    </div>
 </form>
 
 {% endblock %}
