@@ -65,6 +65,7 @@ class User(db.Document, UserMixin):
     authenticated = db.BooleanField(default=False)
     is_active = db.BooleanField(default=True)
     roles = db.ListField(db.StringField(), default=['AI'])
+    delegation = db.StringField()
 
     def get_id(self):
         return self.username
