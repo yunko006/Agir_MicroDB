@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from app import app, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-from app.forms import LoginForm, BenevoleForm, SearchTextForm, UpdateBenevoleForm
+from app.forms import LoginForm, BenevoleForm, SearchTextForm, UpdateBenevoleForm, NewUserForm
 from app.models import *
 from app.role_required import *
 
@@ -56,25 +56,27 @@ def logout():
 
 
 @app.route('/delegation')
-@login_required
+@AI_required
 def accordeon_delegation():
     # get all distinct delegation to loop throught
     delegation = Benevole.objects.distinct('delegation')
     benevoles = Benevole.objects()
+
     return render_template('accordeon_delegation.html', title='delegation', delegation=delegation, benevoles=benevoles)
 
 
-# plus utilisé pour le moment
 @app.route('/benevoles')
 @login_required
 def get_benevoles():
     # Set the pagination configuration
-    page = request.args.get('page', 1, type=int)
+    # page = request.args.get('page', 1, type=int)
 
     # all_benevoles = Benevole.objects()
     # colors = Color.query.paginate(page=page, per_page=ROWS_PER_PAGE)
-    all_benevoles = Benevole.objects.paginate(
-        page=page, per_page=ROWS_PER_PAGE)
+    # all_benevoles = Benevole.objects.paginate(
+    #     page=page, per_page=ROWS_PER_PAGE)
+
+    all_benevoles = Benevole.objects(delegation=current_user.delegation)
 
     return render_template('benevoles.html', title='Benevoles', all_benevoles=all_benevoles)
 
@@ -151,7 +153,6 @@ def help():
 
 
 @app.route('/contact')
-@login_required
 def contact():
     return render_template('contact.html', title='Contact')
 
@@ -169,24 +170,48 @@ def recherche8():
         recherche_list = request.form.getlist('recherche')
         champs_list = request.form.getlist('champs')
 
-        if request.form.get('Inter'):
-            queryset_benevoles = Benevole.objects(volontaire__inter=True)
+        # if request.form.get('Inter'):
+        #     queryset_benevoles = Benevole.objects(volontaire__inter=True)
+
+        #     final_query = convertion(recherche_list, champs_list)
+        #     # final_query = test_convertion_plus_simple(recherche_list, champs_list)
+        #     print(final_query)
+
+        #     benevoles_query = queryset_by_element(
+        #         final_query, queryset_benevoles)
+
+        #     print(final_query)
+        #     return render_template('recherche.html', title='Recherche', benevoles_query=benevoles_query)
+
+        # if request.form.get('France'):
+        #     queryset_benevoles = Benevole.objects(
+        #         volontaire__france_uniquement=True)
+
+        #     final_query = convertion(recherche_list, champs_list)
+        #     benevoles_query = queryset_by_element(
+        #         final_query, queryset_benevoles)
+
+        #     return render_template('recherche.html', title='Recherche', benevoles_query=benevoles_query)
+
+        if request.form.get('Etendre'):
+            # get tous les bénévoles en fonction de la délégation du compte qui fait une recherche
+            # délégation = current_user.delegation
+            # queryset_benevoles = Benevole.objects(delegation=délégation)
+            queryset_benevoles = Benevole.objects.all()
 
             final_query = convertion(recherche_list, champs_list)
-            # final_query = test_convertion_plus_simple(recherche_list, champs_list)
-            print(final_query)
 
             benevoles_query = queryset_by_element(
                 final_query, queryset_benevoles)
 
-            print(final_query)
             return render_template('recherche.html', title='Recherche', benevoles_query=benevoles_query)
 
-        if request.form.get('France'):
-            queryset_benevoles = Benevole.objects(
-                volontaire__france_uniquement=True)
+        else:
+            # prendre tous les bénévoles qui sont listés comme volontaire international
+            queryset_benevoles = Benevole.objects(volontaire__inter=True)
 
             final_query = convertion(recherche_list, champs_list)
+
             benevoles_query = queryset_by_element(
                 final_query, queryset_benevoles)
 
@@ -199,7 +224,7 @@ def recherche8():
 @app.route('/bénévole/<id>', methods=['GET', 'POST'])
 @login_required
 def benevole(id):
-    form = UpdateBenevoleForm()
+
     benevole_par_id = Benevole.objects(id=id)
 
     return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id)
@@ -225,10 +250,10 @@ def search_benevole_by_id():
 @app.route('/search_text', methods=['GET', 'POST'])
 @AI_required
 def search_text():
-    benevoles = Benevole.objects()
-    search_form = SearchTextForm()
+    # benevoles = Benevole.objects()
+    # search_form = SearchTextForm()
 
-    if search_form.validate_on_submit():
+    if request.method == 'POST':
         search = request.form['search']
 
         benevoles_trouver_par_text = Benevole.objects.search_text(
@@ -237,9 +262,9 @@ def search_text():
         # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
         session["benevoles_a_combiner"] = benevoles_trouver_par_text
 
-        return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search, search_form=search_form)
+        return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search)
 
-    return render_template('search_test_form.html', title='Search Text', search_form=search_form, benevoles=benevoles)
+    return render_template('search_test_form.html', title='Search Text')
 
 
 @app.route('/text_result_combinaison', methods=['GET', 'POST'])
@@ -252,7 +277,21 @@ def text_result_combinaison():
         recherche_list = request.form.getlist('recherche')
         champs_list = request.form.getlist('champs')
 
-        if request.form.get('Inter'):
+        # if request.form.get('Inter'):
+        if request.form.get('Etendre'):
+
+            sub_queryset_benevoles = base_queryset
+
+            final_query = convertion(recherche_list, champs_list)
+
+            benevoles_query = queryset_by_element(
+                final_query, sub_queryset_benevoles)
+
+            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
+
+        # if request.form.get('France'):
+        else:
+
             sub_queryset_benevoles = base_queryset.filter(
                 volontaire__inter=True)
 
@@ -263,22 +302,32 @@ def text_result_combinaison():
 
             return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
 
-        if request.form.get('France'):
-            sub_queryset_benevoles = base_queryset.filter(
-                volontaire__france_uniquement=True)
-
-            final_query = convertion(recherche_list, champs_list)
-
-            benevoles_query = queryset_by_element(
-                final_query, queryset_benevoles)
-
-            return render_template('combinaison_sur_texte_resultats.html', title='Résultats combinaison', benevoles_query=benevoles_query)
-
     else:
         return render_template('combinaison_text.html', title='Huit')
 
 
-@ app.route('/not-ROLE/')
-@ login_required
+@app.route('/not-ROLE/')
+@login_required
 def not_ROLE():
     return render_template('unauthorized.html', title='Pas autorisé')
+
+
+@app.route('/create_user', methods=['GET', 'POST'])
+@admin_required
+def create_user():
+    form = NewUserForm()
+
+    if form.validate_on_submit():
+        new_user = User()
+        new_user.username = request.form['identifiant']
+        pw = request.form['password']
+        crypted = bcrypt.generate_password_hash(pw).decode('utf-8')
+        new_user.password = crypted
+        new_user.roles = [r for r in request.form['roles']]
+        new_user.delegation = request.form['delegation']
+
+        new_user.save()
+
+        return redirect(url_for('index'))
+
+    return render_template('register_user.html', title='Nouveau User', form=form)

@@ -89,3 +89,40 @@ search text butoon:
 <div class = "text-center" >
     <a type = "button" class = "btn btn-outline-primary me-2" href = "{{ url_for('text_result_combinaison') }}" > Faire une recherche par combinaison sur ces resultats < /a >
 < / div >
+
+
+# idée pour searh text en fonction des délégations :
+# if search_form.validate_on_submit():
+    if request.method == 'POST':
+        search = request.form['search']
+        print(search)
+
+        if 'Admin' in current_user.roles or 'DT' in current_user.roles:
+            # aucun filtrage
+            benevoles_trouver_par_text = Benevole.objects.search_text(
+                search).order_by('$text_score')
+
+            # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
+            session["benevoles_a_combiner"] = benevoles_trouver_par_text
+
+        if 'AI' in current_user.roles:
+            # filtre les bénévoles en fonctions du role de l'user
+            benevoles_trouver_par_text = Benevole.objects(delegation=current_user.delegation).search_text(
+                search).order_by('$text_score')
+
+            # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
+            session["benevoles_a_combiner"] = benevoles_trouver_par_text
+
+
+# route quand les delegation seront prise en compte.
+def accordeon_delegation():
+    # get all distinct delegation to loop throught
+    if 'AI' in current_user.roles:
+        delegation = Benevole.objects.distinct('delegation')
+        benevoles = Benevole.objects()
+
+        return render_template('accordeon_delegation.html', title='delegation', delegation=delegation, benevoles=benevoles)
+
+    else:
+        # si pas admin redirect vers les bénévoles qui appartiennent a sa delegation
+        return redirect(url_for('get_benevoles'))
