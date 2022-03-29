@@ -32,7 +32,7 @@
                         {% for b in benevole %}
                             {% if b is not string %}
                                 <tr style="transform: rotate(0);">
-                            <th scope="row"><a href="{{ url_for('benevole', id=b.id) }}" class="stretched-link text-decoration-none text-dark">{{ b.id}}</a></th>
+                                    <th scope="row"><a href="{{ url_for('benevole', id=b.id) }}" class="stretched-link text-decoration-none text-dark">{{ b.id}}</a></th>
                                     <td>{{ b.nom }}</td>
                                     <td>{{ b.prenom }}</td>
                                     <td>{{ b.contact.email }}</td>
