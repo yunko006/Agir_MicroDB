@@ -1,10 +1,11 @@
-{% extends "header.html" %}
+{% extends "base.html" %}
+{% block title %} Délégation {{ current_user.delegation }} {% endblock %}
 
 {% block page_header %}
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="text-center">Tous les intervenants</h2>
+            <h2 class="text-center">Délégation {{ current_user.delegation }}</h2>
         </div>
         <div class="col-4">
             <form class="formi" id="form-search-id" action="{{ url_for('search_benevole_by_id') }}" method="post">
@@ -20,7 +21,7 @@
 
 {% block content %}
 
-    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 mb-2 position-relative">
+    <!-- <div class="row g-0 border rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 mb-2 position-relative"> -->
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -32,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for benevole in all_benevoles.items %}
-                    <tr>
-                        <th scope="row"><a href="/" class="stretched-link">{{ benevole.id}}</a></th>
+                {% for benevole in all_benevoles %}
+                    <tr style="transform: rotate(0);">
+                        <th scope="row"><a href="{{ url_for('benevole', id=benevole.id) }}" class="stretched-link text-decoration-none text-dark">{{ benevole.id}}</a></th>
                         <td> {{benevole.nom }}</td>
                         <td>{{ benevole.prenom }}</td>
                         <td>{{ benevole.contact.email }}</td>
@@ -43,61 +44,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-
-<!-- accordion -->
-{% for benevole in all_benevoles.items %}
-<div class="accordion" id="accordion-{{ loop.index }}">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="heading{{ loop.index }}">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
-        {{ benevole.delegation }}
-      </button>
-    </h2>
-    <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#accordion-{{ loop.index }}">
-      <div class="accordion-body">
-        {{ benevole.prenom }}
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
-
-<!-- Pagination Links-->
-<div class="text-center">
-    <a href="{{ url_for('get_benevoles', page=all_benevoles.prev_num) }}"
-       class="btn btn-outline-primary
-       {% if all_benevoles.page == 1 %}disabled{% endif %}">
-        &laquo;
-    </a>
-<!-- Loop through the number of pages to display a link for each-->
-    {% for page_num in all_benevoles.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-
-{% if page_num %}
-<!-- Check for the active page and set the link to "Active"-->
-            {% if all_benevoles.page == page_num %}
-            <a href="{{ url_for('get_benevoles', page=page_num) }}"
-               class="btn btn-primary">
-                {{ page_num }}
-            </a>
-            {% else %}
-            <a href="{{ url_for('get_benevoles', page=page_num) }}"
-               class="btn btn-outline-primary">
-                {{ page_num }}
-            </a>
-            {% endif %}
-        {% else %}
-            ...
-        {% endif %}
-    {% endfor %}
-    <a href="{{ url_for('get_benevoles', page=all_benevoles.next_num) }}"
-       class="btn btn-outline-primary
-       {% if all_benevoles.page == all_benevoles.pages %}disabled{% endif %}">
-        &raquo;
-    </a>
-</div>
-<!-- <p class="text-center md-2">
-   Page {{ all_benevoles.page }} sur {{ all_benevoles.pages }}
-</p> -->
+    <!-- </div> -->
 
 {% endblock %}
