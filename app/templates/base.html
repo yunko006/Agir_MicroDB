@@ -9,10 +9,15 @@
       {% block title %} {% endblock %}
     </title>
     <!-- Bootstrap -->
-    {{ bootstrap.load_css() }}
+    {% block styles %}
+      <!-- Bootstrap CSS -->
+      {{ bootstrap.load_css() }}
+    {% endblock %}
 
 
     {% block additional_css %}{% endblock %}
+
+    {% block additional_script %}{% endblock %}
 
   </head>
   <body>
@@ -26,14 +31,16 @@
 
       {% block page_header %} {% endblock page_header %}
 
-        {% block content %} {% endblock %}
+      {% block content %} {% endblock %}
 
       </div>
 
     </main>
 
-    <!-- bootstrap js -->
-    {{ bootstrap.load_js() }}
+    {% block scripts %}
+      <!-- Optional JavaScript -->
+      {{ bootstrap.load_js() }}
+    {% endblock %}
 
   </body>
 </html>
