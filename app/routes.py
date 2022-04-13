@@ -255,15 +255,27 @@ def search_text():
 
     if request.method == 'POST':
         search = request.form['search']
+        value = request.form['inlineRadioOptions']
 
-        benevoles_trouver_par_text = Benevole.objects.search_text(
-            search).order_by('$text_score')
+        if value == 'RadioNational':
 
-        # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
-        session["benevoles_a_combiner"] = benevoles_trouver_par_text
+            benevoles_trouver_par_text = Benevole.objects.search_text(
+                search).order_by('$text_score')
 
-        return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search)
+            # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
+            session["benevoles_a_combiner"] = benevoles_trouver_par_text
 
+            return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search)
+
+        if value == 'RadioDelegation':
+
+            benevoles_trouver_par_text = Benevole.objects(delegation=current_user.delegation).search_text(
+                search).order_by('$text_score')
+
+            # set la variable a la session (redis) pour pouvoir y acceder dans une autre route.
+            session["benevoles_a_combiner"] = benevoles_trouver_par_text
+
+            return render_template('search_text_results.html', benevoles_trouver_par_text=benevoles_trouver_par_text, search=search)
     return render_template('search_test_form.html', title='Search Text')
 
 
