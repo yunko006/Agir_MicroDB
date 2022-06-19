@@ -89,4 +89,5 @@ class NewUserForm(FlaskForm):
     roles = StringField('Roles pour cette utilisateur',
                         validators=[DataRequired()])
     delegation = StringField('Délégation', validators=[DataRequired()])
+    numero = StringField("Numéro d'adhérent", validators=[DataRequired()])
     submit = SubmitField('Créer un nouvel utilisateur')
