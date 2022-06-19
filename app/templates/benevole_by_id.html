@@ -51,7 +51,7 @@
                     <div class="col">
                         {{ b.contact.email}}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                             <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -93,7 +93,7 @@
                     <div class="col">
                         {{ b.contact.numéro}}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                             <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalNuméro">
@@ -173,7 +173,7 @@
                     <div class="col">
                         {{ b.disponibilités.mission_ou_projet }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalMissionsProjets">
@@ -214,7 +214,7 @@
                     <div class="col">
                         {{ b.disponibilités.durée }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDurée">
@@ -255,7 +255,7 @@
                     <div class="col">
                         {{ b.disponibilités.nb_déplacements }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDéplacements">
@@ -300,7 +300,7 @@
                     <div class="col">
                         {{b.langues.maternelle }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangMaternelle">
@@ -341,7 +341,7 @@
                     <div class="col">
                         {{b.langues.autonome }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangAutonome">
@@ -382,7 +382,7 @@
                     <div class="col">
                         {{ b.langues.notions }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangNotions">
@@ -423,7 +423,7 @@
                     <div class="col">
                         {{ b.langues.lu_parlé_écrit }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalLangLuParléEcrit">
@@ -468,7 +468,7 @@
                     <div class="col">
                         {{ b.DomainesEtSecteurs.secteurs }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalSecteurs">
@@ -507,7 +507,7 @@
                     <div class="col">
                         {{ b.DomainesEtSecteurs.domaines }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalDomaines">
@@ -546,7 +546,7 @@
                     <div class="col">
                         {{ b.DomainesEtSecteurs.compétences }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalCompétences">
@@ -585,7 +585,7 @@
                     <div class="col">
                         {{ b.DomainesEtSecteurs.fonctions }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalFonctions">
@@ -629,7 +629,7 @@
                     <div class="col">
                         {{ b.ExperienceInterBenevole.roles }}
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalRoles">
@@ -668,7 +668,7 @@
                     <div class="col">
                         <p class="lh-sm">{{ b.ExperienceInterBenevole.expérience_internationale }}</p>
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalExpInter">
@@ -707,7 +707,7 @@
                     <div class="col">
                         <p class="lh-sm">{{ b.ExperienceInterBenevole.expérience_internationale_benevole }}</p>
                     </div>
-                    {% if 'AI' in current_user.roles %}
+                    {% if 'AI' in current_user.roles or benevole_id == current_user.numero %}
                     <div class="col-1 d-flex flex-row-reverse">
                         <!-- Button trigger modal -->
                         <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#ModalExpBénévole">
