@@ -43,7 +43,7 @@ def login():
                 if 'AI' in user.roles:
                     return redirect(url_for('search_text'))
                 else:
-                    return redirect(url_for('accordeon_delegation'))
+                    return redirect(url_for('benevole', id=current_user.numero))
 
     return render_template('login.html', title="Sign In", form=form)
 
@@ -66,7 +66,7 @@ def accordeon_delegation():
 
 
 @app.route('/benevoles')
-@login_required
+@benevole_required
 def get_benevoles():
     # Set the pagination configuration
     # page = request.args.get('page', 1, type=int)
@@ -76,8 +76,9 @@ def get_benevoles():
     # all_benevoles = Benevole.objects.paginate(
     #     page=page, per_page=ROWS_PER_PAGE)
 
-    all_benevoles = Benevole.objects(delegation=current_user.delegation)
-
+    # all_benevoles = Benevole.objects(delegation=current_user.delegation)
+    benevole_par_id = Benevole.objects(id=current_user.numero)
+    # ma_fiche = Benevole.objects(id=current_user.numero)
     return render_template('benevoles.html', title='Benevoles', all_benevoles=all_benevoles)
 
 
@@ -224,11 +225,23 @@ def recherche8():
 @app.route('/bénévole/<id>', methods=['GET', 'POST'])
 @login_required
 def benevole(id):
+    print(current_user.roles)
 
-    benevole_par_id = Benevole.objects(id=id)
+    if 'AI' in current_user.roles:
 
-    return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id)
-    # return render_template('benevole_update_form.html', benevole_par_id=benevole_par_id, form=form)
+        benevole_par_id = Benevole.objects(id=id)
+
+        return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id)
+
+    elif current_user.numero == id:
+
+        benevole_par_id = Benevole.objects(id=id)
+        # get l'oject precis pour pouvoir avoir faire .id
+        int_benevole_id = Benevole.objects.get(id=id)
+        # converti un int en str pour faire marcher dans le template html.
+        benevole_id = str(int_benevole_id.id)
+
+        return render_template('benevole_by_id.html', benevole_par_id=benevole_par_id, benevole_id=benevole_id)
 
 
 @app.route('/result_benevole_by_id', methods=['GET', 'POST'])
