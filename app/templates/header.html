@@ -11,13 +11,17 @@
     <li><a href="/" class="nav-link px-2 link-dark">Accueil</a></li>
     <!-- dropdown bénévole -->
     <li class="nav-item dropdown">
-      <a class="nav-link link-dark dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Bénévoles</a>
-      <ul class="dropdown-menu" aria-labelledby="dropdown03">
-        <li><a class="dropdown-item" href="{{ url_for('accordeon_delegation') }}">Tous les intervenants</a></li>
-        {% if 'AI' in current_user.roles %}
+      {% if 'AI' in current_user.roles %}
+        <a class="nav-link link-dark dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Bénévoles</a>
+        <ul class="dropdown-menu" aria-labelledby="dropdown03">
+          <li><a class="dropdown-item" href="{{ url_for('accordeon_delegation') }}">Tous les intervenants</a></li>
           <li><a class="dropdown-item" href="{{ url_for('register_benevole') }}">Enregistrer un bénévole</a></li>
-        {% endif %}
-      </ul>
+        </ul>
+      {% endif %}
+      {% if 'Intervenant' in current_user.roles %}
+        <li><a class="nav-link px-2 link-dark" href="{{ url_for('benevole', id=current_user.numero) }}">Voir ma fiche</a></li>
+      {% endif %}
+
     </li>
     <!-- dropdown recherche -->
     {% if 'AI' in current_user.roles %}
