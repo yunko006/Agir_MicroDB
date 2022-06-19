@@ -20,6 +20,21 @@ def AI_required(func):
     return decorated_views
 
 
+def benevole_required(func):
+    @wraps(func)
+    def decorated_views(*args, **kwargs):
+        if request.method in EXEMPT_METHODS:
+            return func(*args, **kwargs)
+        elif current_app.config.get('LOGIN_DISABLED'):
+            return func(*args, **kwargs)
+        elif not current_user.is_authenticated:
+            return current_app.login_manager.unauthorized()
+        elif 'benevole' not in current_user.roles:
+            return current_app.login_manager.not_ROLE()
+        return func(*args, **kwargs)
+    return decorated_views
+
+
 def admin_required(func):
     @wraps(func)
     def decorated_views(*args, **kwargs):
