@@ -35,8 +35,8 @@ Ce projet utilise les packages open source suivants :
 - [Redis](https://redis.io/)
 - [mongodb](https://www.mongodb.com/fr-fr)
 - [flask-mongoengine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/)
-* [flask-login](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/)
-* [flask-bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
+- [flask-login](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/)
+- [flask-bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/)
 
 
 ## License
