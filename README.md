@@ -41,6 +41,6 @@ Ce projet utilise les packages open source suivants :
 
 ## License
 
-MIT
+Apache-2.0 license
 
 ---
