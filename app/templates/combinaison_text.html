@@ -3,7 +3,22 @@
 {% block title %} Recherche avancée {% endblock %}
 
 {% block page_header %}
-<h2 class="d-flex justify-content-center mb-2">Recherche par combinaison</h2>
+<div>
+  <div class="row">
+    <div class="col">
+      <h2 class="d-flex justify-content-center mb-2">Recherche par combinaison</h2>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col justify-content-center text-center">
+        <button class="btn btn-primary" type="submit" form="my-form">Rechercher</button>
+      </div>
+      <div class="col">
+        <a class="text-center" href="{{ url_for('help') }}">Aide</a>
+      </div>
+    </div>
+</div>
+
 {% endblock page_header %}
 
 {% block content %}
@@ -210,7 +225,7 @@
         <label for="france">Etendre à tous les bénévoles</label>
     {% endif %}
   </form>
-  <button class="btn btn-primary" type="submit" form="my-form">Rechercher</button>
+  <!-- <button class="btn btn-primary" type="submit" form="my-form">Rechercher</button> -->
 </div>
 
 
